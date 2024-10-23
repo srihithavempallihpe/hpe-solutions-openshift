@@ -1,14 +1,16 @@
-base_path: /opt/GreenLake-for-OpenShift/airgap/mirror_registry
-mirror_registry_ip: 10.0.11.30
-mirror_registry_fqdn: dserver.anand.local
-pull_secret_path: /opt/GreenLake-for-OpenShift/airgap/mirror_registry/pull-secret
-password_file_path: /opt/GreenLake-for-OpenShift/airgap/mirror_registry/credentials
-email: eaj@hpe.com
+base_path: /opt/hpe-solutions-openshift/DL-LTI-Openshift/airgap/mirror_registry  #provide mirror registory folder location
+mirror_registry_ip: 10.0.11.30                                                   #provide mirror_registry ip
+mirror_registry_fqdn: dserver.anand.local                                        #provide mirror_registry fqdn
+pull_secret_path: /opt/hpe-solutions-openshift/DL-LTI-Openshift/airgap/mirror_registry/pull-secret #provide pull secret file location
+email: eaj@hpe.com                                                               #provide  email id
+OCP_RELEASE: 4.16.10                                                             #provide ocp release verison
+LOCAL_REGISTRY: dserver.anand.local:8443                                         #provide <mirror_registry fqdn>:8443
+LOCAL_REPOSITORY: ocp416                                                         #provide local repository name
+ARCHITECTURE: x86_64                                                             #provide arhitecture
 
-OCP_RELEASE: 4.16.10
-LOCAL_REGISTRY: dserver.anand.local:8443
-LOCAL_REPOSITORY: ocp416
+#do not change these values
 PRODUCT_REPO: openshift-release-dev
-LOCAL_SECRET_JSON: /opt/GreenLake-for-OpenShift/airgap/mirror_registry/json_pull_secret.json
+LOCAL_SECRET_JSON: /opt/hpe-solutions-openshift/DL-LTI-Openshift/airgap/mirror_registry/json_pull_secret.json
 RELEASE_NAME: ocp-release
-ARCHITECTURE: x86_64
+password_file_path: /opt/hpe-solutions-openshift/DL-LTI-Openshift/airgap/mirror_registry/credentials
+
