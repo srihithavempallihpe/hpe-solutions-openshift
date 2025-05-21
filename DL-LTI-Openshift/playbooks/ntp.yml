@@ -1,6 +1,6 @@
 ---
 - name: Setup NTP
-  hosts: kvm_nodes
+  hosts: localhost
   become: yes
   become_user: root  # Ensures the playbook runs with root privileges
   gather_facts: False
