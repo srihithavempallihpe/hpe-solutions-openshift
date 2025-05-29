@@ -6,7 +6,7 @@
         --description "vm creation for demo"
         --memory={{ morpheus['customOptions']['vm_mem'] }}
         --vcpus={{ morpheus['customOptions']['vm_cpu'] }}  
-        --cdrom /root/ubuntu-22.04.5-live-server-amd64.iso 
+        --location /root/ubuntu-22.04.5-live-server-amd64.iso 
         --os-variant=ubuntu22.04
         --disk path=/mnt/ocp_vms/demo-vm.qcow2,bus=virtio,size={{ morpheus['customOptions']['vm_size'] }}
         --autostart 
