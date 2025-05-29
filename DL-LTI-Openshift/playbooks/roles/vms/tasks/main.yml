@@ -11,8 +11,7 @@
         --disk path=/mnt/ocp_vms/demo-vm.qcow2,bus=virtio,size={{ morpheus['customOptions']['vm_size'] }}
         --autostart 
         --graphics none
-        --extra-args "console=ttyS0,115200n8 serial"
         --console pty,target_type=virtio
-        --network bridge={{ morpheus['customOptions']['common']['interface_name'] }},mac.address={{  morpheus['customOptions']['ocp_masters'][0]['mac_address'] }}
+        --network bridge={{ morpheus['customOptions']['common']['interface_name'] }},mac={{  morpheus['customOptions']['ocp_masters'][0]['mac_address'] }}
         --wait 10
   delegate_to: "{{ groups['all'][0] }}" 
