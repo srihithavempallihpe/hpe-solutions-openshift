@@ -1,9 +1,8 @@
 ---
 - name: Setup NTP
-  hosts: all
-  become: yes
-  become_user: root  # Ensures the playbook runs with root privileges
+  hosts: kvm_nodes
   gather_facts: False
+  vars_files:
+    - ../input.yaml
   roles:
     - role: roles/ntp
-
