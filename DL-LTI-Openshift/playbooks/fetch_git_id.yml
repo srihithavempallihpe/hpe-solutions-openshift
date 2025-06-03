@@ -11,7 +11,7 @@
         paths: "{{ morpheus_git_dir }}"
         file_type: directory
         depth: 1
-      register: git_dirs
+      register: repo_dirs
 
     - name: Check each .git/config for the target Git URL
       command: grep -q "{{ target_git_url }}" "{{ item.path }}/.git/config"
