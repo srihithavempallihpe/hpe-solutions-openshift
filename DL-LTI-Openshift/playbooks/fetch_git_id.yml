@@ -1,0 +1,35 @@
+- name: Find Morpheus Git repo folder by remote URL
+  hosts: localhost
+  gather_facts: false
+  vars:
+    morpheus_git_dir: "/var/opt/morpheus/morpheus-local/repo/git"
+    target_git_url: "https://github.com/srihithavempallihpe/hpe-solutions-openshift.git"
+
+  tasks:
+    - name: List all Morpheus Git repo folders
+      find:
+        paths: "{{ morpheus_git_dir }}"
+        file_type: directory
+        depth: 1
+      register: git_dirs
+
+    - name: Check each .git/config for the target Git URL
+      shell: |
+        if [ -f "{{ item.path }}/.git/config" ]; then
+          grep -q "{{ target_git_url }}" "{{ item.path }}/.git/config" && echo "{{ item.path }}"
+        fi
+      with_items: "{{ git_dirs.files }}"
+      register: matching_paths
+      changed_when: false
+
+    - name: Set matched path as a fact
+      set_fact:
+        matched_git_path: "{{ item.stdout }}"
+      when: item.stdout != ""
+      loop: "{{ matching_paths.results }}"
+      loop_control:
+        label: "{{ item.item.path }}"
+
+    - name: Display matched Git repo folder
+      debug:
+        msg: "Morpheus repo path is {{ matched_git_path }}"
