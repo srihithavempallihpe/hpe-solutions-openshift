@@ -14,7 +14,7 @@
       register: repo_dirs
 
     - name: Check each .git/config for the target Git URL
-      command: grep -q "{{ target_git_url }}" "{{ item.path }}/.git/config"
+      command: grep "{{ target_git_url }}" "{{ item.path }}/.git/config"
       loop: "{{ repo_dirs.files }}"
       register: grep_results
       ignore_errors: yes  # Prevent Ansible from marking it failed if grep fails
