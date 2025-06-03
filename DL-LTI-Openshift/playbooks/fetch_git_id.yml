@@ -14,19 +14,16 @@
       register: git_dirs
 
     - name: Check each .git/config for the target Git URL
-      shell: |
-        if [ -f "{{ item.path }}/.git/config" ]; then
-          grep -q "{{ target_git_url }}" "{{ item.path }}/.git/config" && echo "{{ item.path }}"
-        fi
-      with_items: "{{ git_dirs.files }}"
-      register: matching_paths
-      changed_when: false
+      command: grep -q "{{ target_git_url }}" "{{ item.path }}/.git/config"
+      loop: "{{ repo_dirs.files }}"
+      register: grep_results
+      ignore_errors: yes  # Prevent Ansible from marking it failed if grep fails
 
     - name: Set matched path as a fact
       set_fact:
         matched_git_path: "{{ item.stdout }}"
       when: item.stdout != ""
-      loop: "{{ matching_paths.results }}"
+      loop: "{{ grep_results.results }}"
       loop_control:
         label: "{{ item.item.path }}"
 
