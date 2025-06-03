@@ -17,20 +17,16 @@
       command: grep "{{ target_git_url }}" "{{ item.path }}/.git/config"
       loop: "{{ repo_dirs.files }}"
       register: grep_results
-      ignore_errors: yes  # Prevent Ansible from marking it failed if grep fails
-      
-    - name: information
-      debug: 
-        var: grep_results
-      
-    - name: Set matched path as a fact
+      ignore_errors: yes
+    
+    - name: Set matched repo path
       set_fact:
-        matched_git_path: "{{ item.stdout }}"
+        matched_git_path: "{{ item.item.path }}"
       when: item.stdout != ""
       loop: "{{ grep_results.results }}"
       loop_control:
         label: "{{ item.item.path }}"
-
+    
     - name: Display matched Git repo folder
       debug:
         msg: "Morpheus repo path is {{ matched_git_path }}"
