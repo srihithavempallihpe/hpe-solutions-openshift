@@ -1,20 +1,4 @@
----
-   - name: Check if wget exists
-     shell: which wget
-     register: which_wget
-     ignore_errors: true
-   
-   - debug:
-       var: which_wget
-    
-   - name: Try wget without sudo
-     shell: wget http://sourceforge.net/projects/sshpass/files/latest/download -O /tmp/sshpass.tar.gz
-     register: wget_output
-     ignore_errors: true
-   
-   - debug:
-       var: wget_output
-       
+---    
    - name: download sshpass package
      shell: wget http://sourceforge.net/projects/sshpass/files/latest/download -O sshpass.tar.gz
      args:
