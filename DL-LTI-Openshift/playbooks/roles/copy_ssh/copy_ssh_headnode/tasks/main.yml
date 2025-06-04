@@ -26,6 +26,7 @@
        chdir: "{{ var.files[0].path }}/"
   
    - name: Install sshpass
+     become: true
      shell: make install
      args:
        chdir: "{{ var.files[0].path }}/"
