@@ -10,7 +10,7 @@ servers:
    HWADDR2: 88:e9:a4:cb:32:1d             #mac address for server physical interface2
    Host_OS_disk: sda
    Host_VlanID:                          #solution VLAN ID ex. 230
-   Host_IP: 20.20.20.101
+   Host_IP: 172.28.0.101
    Host_Netmask: 255.255.255.0
    Host_Prefix: 24                          #ex. 8,24,32
    Host_Gateway: 172.28.0.2
