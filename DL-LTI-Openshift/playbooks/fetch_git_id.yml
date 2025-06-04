@@ -32,7 +32,7 @@
 
     - name: Set matched repo path
       set_fact:
-        matched_git_path: "{{ item.item.path }}"
+        morpheus_git_path: "{{ item.item.path }}"
       when: item.stdout is defined and item.stdout != ""
       loop: "{{ grep_results.results }}"
       loop_control:
@@ -40,4 +40,14 @@
 
     - name: Display matched Git repo folder
       debug:
-        msg: "Morpheus repo path is {{ matched_git_path | default('No match found') }}"
+        msg: "Morpheus repo path is {{ morpheus_git_path | default('No match found') }}"
+
+    - name: "Add repo path to dummy host"
+      add_host:
+        name:   "morpheus_git_path"
+        morpheus_git_path:  "{{morpheus_git_path }}"
+    
+    - name:
+      debug:
+        msg: "Morpheus git path is {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}"
+
