@@ -1,6 +1,6 @@
 ---
    - name: download sshpass package
-     shell: wget http://sourceforge.net/projects/sshpass/files/latest/download -O sshpass.tar.gz
+     shell: sudo wget http://sourceforge.net/projects/sshpass/files/latest/download -O sshpass.tar.gz
      args:
        chdir: /tmp/
 
