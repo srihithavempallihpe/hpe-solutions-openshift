@@ -26,10 +26,10 @@
        chdir: "{{ var.files[0].path }}/"
   
    - name: Install sshpass
-     become: true
      shell: make install
      args:
        chdir: "{{ var.files[0].path }}/"
+     ignore_errors: true
 
    - name: Copy ssh keys to head nodes
      shell: "sshpass -p '{{ servers[0].Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no root@{{ servers[0].Host_IP }}"
