@@ -1,8 +1,21 @@
 ---
+  - name: Find ISO file in Morpheus image folders
+    become: true
+    find:
+      paths: /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/
+      patterns: "{{ config.OS_image_name }}"   # Example: RHEL-9.4.0*.iso
+      recurse: yes
+    register: iso_search
+
+  - name: Set ISO full path as fact
+    set_fact:
+      iso_full_path: "{{ iso_search.files[0].path }}"
+    when: iso_search.matched > 0
+
   - name: copy ISO image to head node
     become: true
     copy:
-      src: /usr/share/nginx/html/{{ config.OS_image_name }}
+      src: "{{ iso_full_path }}"
       dest: /tmp/
       owner: root
       group: root
