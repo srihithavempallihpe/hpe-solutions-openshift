@@ -27,7 +27,7 @@
       shell: yum -y install openshift-ansible openshift-clients jq
       
     - name: Fetch base path
-      debug:
+      set_fact:
           base_path: {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}/DL-LTI-Openshift
           
     - name: Copying ansible scripts to installer
