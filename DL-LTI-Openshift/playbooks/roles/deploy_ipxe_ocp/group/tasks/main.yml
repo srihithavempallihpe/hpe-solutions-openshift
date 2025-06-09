@@ -15,6 +15,10 @@
 ####
 
 ---
+    - name: Fetch base path
+      set_fact:
+          base_path: {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}/DL-LTI-Openshift
+          
     - name: copy group to back 
       copy:
         src: "{{ base_path }}/playbooks/roles/deploy_ipxe_ocp/files/group/{{ item }}"
