@@ -1,4 +1,9 @@
 ---
+
+  - name: Fetch base path
+    set_fact:
+        base_path: {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}/DL-LTI-Openshift
+        
   - name: populate service facts
     service_facts:
 
