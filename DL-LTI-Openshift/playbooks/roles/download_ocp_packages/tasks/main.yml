@@ -1,4 +1,8 @@
 ---
+  - name: Fetch base path
+    debug:
+        base_path: {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}/DL-LTI-Openshift
+          
   - name: Download Openshift components
     script: ../shell-scripts/download_openshift_components.sh {{ ocp_version }} {{yumrepo }} {{ is_environment_airgap }}
     args:
