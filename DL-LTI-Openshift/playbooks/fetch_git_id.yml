@@ -5,19 +5,15 @@
     target_git_url: "https://github.com/srihithavempallihpe/hpe-solutions-openshift.git"
 
   tasks:
-    - name: Check who is running this playbook
+    - name: Get current user
       command: whoami
       register: whoami_output
 
-    - name: Set Morpheus Git directory dynamically
+    - name: Set base path where Git repos are stored
       set_fact:
         morpheus_git_dir: "/var/opt/morpheus/{{ whoami_output.stdout }}/repo/git"
 
-    - name: Show computed Git directory
-      debug:
-        var: morpheus_git_dir
-
-    - name: List all Morpheus Git repo folders
+    - name: List possible Git repo directories
       find:
         paths: "{{ morpheus_git_dir }}"
         file_type: directory
@@ -30,24 +26,20 @@
       register: grep_results
       ignore_errors: yes
 
-    - name: Set matched repo path
+    - name: Save matching repo path as fact (if found)
       set_fact:
         morpheus_git_path: "{{ item.item.path }}"
       when: item.stdout is defined and item.stdout != ""
       loop: "{{ grep_results.results }}"
       loop_control:
         label: "{{ item.item.path }}"
+      delegate_to: localhost
 
-    - name: Display matched Git repo folder
-      debug:
-        msg: "Morpheus repo path is {{ morpheus_git_path | default('No match found') }}"
-
-    - name: "Add repo path to dummy host"
+    - name: Add host with global fact for reuse
       add_host:
-        name:   "morpheus_git_path"
-        morpheus_git_path:  "{{morpheus_git_path }}"
-    
-    - name:
-      debug:
-        msg: "Morpheus git path is {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}"
+        name: morpheus_git_path_host
+        morpheus_git_path: "{{ morpheus_git_path }}"
 
+    - name: Display final path
+      debug:
+        msg: "Morpheus Git repo found at: {{ morpheus_git_path | default('Not found') }}"
