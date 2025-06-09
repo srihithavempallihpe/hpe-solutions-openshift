@@ -1,7 +1,6 @@
 ---
 - name: Download OCP Packages
   hosts: rhel9_installerVM
-  become: yes
   gather_facts: False
   vars_files:
     - ../input.yaml
