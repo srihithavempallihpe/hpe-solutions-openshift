@@ -40,11 +40,15 @@
         name: morpheus_git_path_host
         morpheus_git_path: "{{ morpheus_git_path }}"
     
-    - name: Set global path
+    - name: Set global morpheus git path
       set_fact:
-        global_morpheus_git_path: "{{ morpheus_git_path }}"
+        global_morpheus_git_path: "{{ item.item.path }}"
+      when: item.stdout is defined and item.stdout != ""
       delegate_to: localhost
       run_once: true
+      vars:
+        ansible_facts:
+          global_morpheus_git_path: "{{ item.item.path }}"
 
     - name: print path value
       debug:
