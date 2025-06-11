@@ -28,7 +28,7 @@
     
     - name: Fetch base path
       set_fact:
-        base_path: "{{ hostvars['localhost']['morpheus_git_path'] }}/DL-LTI-Openshift"
+        git_base_path: "{{ hostvars['localhost']['morpheus_git_path'] }}/DL-LTI-Openshift"
           
     - name: print base path value
       debug:
@@ -36,8 +36,8 @@
         
     - name: Copying ansible scripts to installer
       copy:
-        src: "{{ base_path }}/"
-        dest: "{{ base_path }}/"
+        src: "{{ git_base_path }}/"
+        dest: "{{ dest_base_path }}/"
         owner: root
         group: root
         mode: 775
@@ -47,7 +47,7 @@
       copy:
         remote_src: yes
         src: /usr/share/ansible/openshift-ansible
-        dest: "{{ base_path }}/RHEL_BareMetalworker_nodes/"
+        dest: "{{ dest_base_path }}/RHEL_BareMetalworker_nodes/"
         owner: root
         group: root
 
