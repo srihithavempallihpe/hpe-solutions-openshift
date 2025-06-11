@@ -19,7 +19,7 @@
 
   - name: Make ISO world-readable copy
     become: true
-    shell: cp {{iso_full_path}} /tmp/ && chmod 644 /tmp/rhel9.iso
+    shell: cp {{iso_full_path}} /tmp/ 
     delegate_to: localhost
     run_once: true
   
