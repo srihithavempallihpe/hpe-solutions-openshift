@@ -1,5 +1,6 @@
 ---
   - name: Find full ISO file path via shell (no sudo)
+    become: true
     shell: |
       find /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/ -type f -name "{{ config.OS_image_name }}" 2>/dev/null | head -n 1
     register: iso_path
