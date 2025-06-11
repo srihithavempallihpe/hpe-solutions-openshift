@@ -26,6 +26,7 @@
       group: root
       mode: 0644
     delegate_to: localhost
+    run_once: true
 
   - name: copy ks.cfg file to head node
     become: true
@@ -36,6 +37,7 @@
       group: root
       mode: 777
     delegate_to: localhost
+    run_once: true
 
   - name: create installer VM on KVM node1
     shell:
