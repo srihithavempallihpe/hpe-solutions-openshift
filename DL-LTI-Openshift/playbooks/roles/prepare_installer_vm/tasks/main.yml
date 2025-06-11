@@ -26,13 +26,13 @@
     - name: Install the required packages, including openshift-ansible
       shell: yum -y install openshift-ansible openshift-clients jq
 
-    - name: Debug localhost facts
+    - name: DEBUG global_morpheus_git_path
       debug:
-        msg: "{{ hostvars['localhost'] }}"
+        var: global_morpheus_git_path
 
     - name: Fetch base path
       set_fact:
-        base_path: "{{ base_git_path }}/DL-LTI-Openshift"
+        base_path: "{{ global_morpheus_git_path }}/DL-LTI-Openshift"
           
     - name: print base path value
       debug:
