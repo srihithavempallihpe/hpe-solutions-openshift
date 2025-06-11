@@ -39,6 +39,16 @@
       add_host:
         name: morpheus_git_path_host
         morpheus_git_path: "{{ morpheus_git_path }}"
+        
+    - name: Set global path
+      set_fact:
+        global_morpheus_git_path: "{{ morpheus_git_path }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: print path value
+      debug:
+        var: {{ global_morpheus_git_path }}
 
     - name: Display final path
       debug:
