@@ -48,7 +48,7 @@
 
     - name: print path value
       debug:
-        var: {{ global_morpheus_git_path }}
+        var: global_morpheus_git_path 
 
     - name: Display final path
       debug:
