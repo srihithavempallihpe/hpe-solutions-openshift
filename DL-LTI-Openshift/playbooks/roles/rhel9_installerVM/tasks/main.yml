@@ -1,23 +1,19 @@
 ---
-  - name: Find ISO file with full path from subdirectories
-    become: true
-    find:
-      paths: /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/
-      patterns: "{{ config.OS_image_name }}"   # Example: RHEL-9.4.0*.iso
-      recurse: yes
-      file_type: file
-    register: iso_search
+  - name: Find full ISO file path via shell (no sudo)
+    shell: |
+      find /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/ -type f -name "{{ config.OS_image_name }}" 2>/dev/null | head -n 1
+    register: iso_path
     delegate_to: localhost
     run_once: true
 
   - name: Print all matching ISO files with full paths
     debug:
-      var: iso_search.files
+      var: iso_search.stdout
     
   - name: Set ISO full path as fact
     set_fact:
-      iso_full_path: "{{ iso_search.files[0].path }}"
-    when: iso_search.matched > 0
+      iso_full_path: "{{ iso_path.stdout }}"
+    when: iso_path.stdout != ""
     delegate_to: localhost
 
   - name: copy ISO image to head node
