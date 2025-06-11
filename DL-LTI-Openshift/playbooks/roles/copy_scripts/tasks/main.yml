@@ -2,7 +2,6 @@
   - name: Copy Execution environment
     block:
       - name: Copying ansible scripts to installer
-        become: true
         copy:
           src: "{{ dest_base_path }}/"
           dest: "{{ dest_base_path }}/"
