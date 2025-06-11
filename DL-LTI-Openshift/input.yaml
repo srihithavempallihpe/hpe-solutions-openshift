@@ -155,7 +155,7 @@ pull_secret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZ
 # Details of Ansible User Credentials required to set-up the iPXE
 
 #Path to ISV-OpenShift-develop Directory; Example: /opt/Openshift-Synergy-RA-LTI-OCP-4.12/DL-LTI-Openshift(no trailing forwardslash required)
-base_path: '/opt/hpe-solutions-openshift/DL-LTI-Openshift'
+dest_base_path: '/opt/hpe-solutions-openshift/DL-LTI-Openshift'
 
 #Is Environment Airgapped; ('yes' or 'no'):
 is_environment_airgap: 'no'
