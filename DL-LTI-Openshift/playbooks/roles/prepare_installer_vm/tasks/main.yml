@@ -32,7 +32,7 @@
 
     - name: Fetch base path
       set_fact:
-        base_path: "{{ hostvars['localhost']['global_morpheus_git_path'] }}/DL-LTI-Openshift"
+        base_path: "{{ base_git_path }}/DL-LTI-Openshift"
           
     - name: print base path value
       debug:
