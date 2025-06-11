@@ -8,7 +8,7 @@
 
   - name: Print all matching ISO files with full paths
     debug:
-      var: iso_search.stdout
+      var: iso_path.stdout
     
   - name: Set ISO full path as fact
     set_fact:
