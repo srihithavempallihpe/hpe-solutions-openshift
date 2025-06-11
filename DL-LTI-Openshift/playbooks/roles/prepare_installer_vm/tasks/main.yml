@@ -28,8 +28,12 @@
       
     - name: Fetch base path
       set_fact:
-          base_path: "{{ hostvars['morpheus_git_path_host']['morpheus_git_path'] }}/DL-LTI-Openshift"
+          base_path: "{{ global_morpheus_git_path }}/DL-LTI-Openshift"
           
+    - name: print base path value
+      debug:
+        var: base_path
+        
     - name: Copying ansible scripts to installer
       copy:
         src: "{{ base_path }}/"
