@@ -9,6 +9,10 @@
     delegate_to: localhost
     run_once: true
 
+  - name: Print all matching ISO files with full paths
+    debug:
+      var: iso_search.files
+    
   - name: Set ISO full path as fact
     set_fact:
       iso_full_path: "{{ iso_search.files[0].path }}"
