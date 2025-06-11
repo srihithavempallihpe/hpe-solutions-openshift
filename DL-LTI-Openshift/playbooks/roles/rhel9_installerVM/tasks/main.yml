@@ -25,7 +25,7 @@
       owner: root
       group: root
       mode: 0644
-    delegate_to: localhost=i
+    delegate_to: localhost
 
   - name: copy ks.cfg file to head node
     become: true
