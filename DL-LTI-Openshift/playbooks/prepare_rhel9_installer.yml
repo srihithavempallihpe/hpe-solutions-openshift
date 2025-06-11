@@ -6,6 +6,4 @@
     - ../input.yaml
   roles:
     - role: roles/prepare_installer_vm
-      vars:
-        base_git_path: "{{ global_morpheus_git_path }}"
 
