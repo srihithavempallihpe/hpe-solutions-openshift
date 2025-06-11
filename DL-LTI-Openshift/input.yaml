@@ -5,7 +5,7 @@ servers:
    ILO_Password: Password!234
    Hostname: headnode1.srihitha.local                #ex. headnode1.isv.local
    Host_Username: admin
-   Host_Password: admin
+   Host_Password: Password!234
    HWADDR1: 88:e9:a4:cb:32:1c             #mac address for server physical interface1
    HWADDR2: 88:e9:a4:cb:32:1d             #mac address for server physical interface2
    Host_OS_disk: sda
