@@ -1,15 +1,11 @@
----
-  - name: Fetch base path
-    set_fact:
-        base_path: {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}/DL-LTI-Openshift
-        
+---     
   - name: Copy Execution environment
     block:
       - name: Copying ansible scripts to installer
         become: true
         copy:
-          src: "{{ base_path }}/"
-          dest: "{{ base_path }}/"
+          src: "{{ dest_base_path }}/"
+          dest: "{{ dest_base_path }}/"
           owner: root
           group: root
           mode: 775
