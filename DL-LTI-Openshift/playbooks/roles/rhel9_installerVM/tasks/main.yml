@@ -1,6 +1,5 @@
 ---
   - name: Find ISO file in Morpheus image folders
-    become: true
     find:
       paths: /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/
       patterns: "{{ config.OS_image_name }}"   # Example: RHEL-9.4.0*.iso
