@@ -26,7 +26,7 @@
   - name: Copy ISO image to headnode1
     become: true
     copy:
-      src: /tmp/rhel9.iso
+      src: /tmp/{{ config.OS_image_name }}
       dest: /tmp/
       owner: root
       group: root
