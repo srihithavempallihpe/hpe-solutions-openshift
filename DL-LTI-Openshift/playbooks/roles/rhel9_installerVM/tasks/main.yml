@@ -1,11 +1,13 @@
 ---
-  - name: Find ISO file in Morpheus image folders
+  - name: Find ISO file with full path from subdirectories
     find:
       paths: /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/
       patterns: "{{ config.OS_image_name }}"   # Example: RHEL-9.4.0*.iso
       recurse: yes
+      file_type: file
     register: iso_search
     delegate_to: localhost
+    run_once: true
 
   - name: Set ISO full path as fact
     set_fact:
