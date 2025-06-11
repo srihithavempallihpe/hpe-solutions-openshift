@@ -42,8 +42,8 @@
       owner: root
       group: root
       mode: 777
-    delegate_to: localhost
-    run_once: true
+    vars:
+      ansible_user: root
 
   - name: create installer VM on KVM node1
     shell:
