@@ -18,6 +18,7 @@
     delegate_to: localhost
 
   - name: copy ISO image to head node
+    become: true
     copy:
       src: "{{ iso_full_path }}"
       dest: /tmp/
@@ -26,6 +27,7 @@
       mode: 0644
 
   - name: copy ks.cfg file to head node
+    become: true
     template:
       src: ks.conf.j2
       dest: /tmp/ks.cfg
