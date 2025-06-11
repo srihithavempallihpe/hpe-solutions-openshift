@@ -17,16 +17,21 @@
     when: iso_path.stdout != ""
     delegate_to: localhost
 
-  - name: copy ISO image to head node
+  - name: Make ISO world-readable copy
+    become: true
+    command: >
+      cp {{iso_full_path}} /tmp/rhel9.iso && chmod 644 /tmp/rhel9.iso
+    delegate_to: localhost
+    run_once: true
+  
+  - name: Copy ISO image to headnode1
     become: true
     copy:
-      src: "{{ iso_full_path }}"
+      src: /tmp/rhel9.iso
       dest: /tmp/
       owner: root
       group: root
       mode: 0644
-    delegate_to: localhost
-    run_once: true
 
   - name: copy ks.cfg file to head node
     become: true
