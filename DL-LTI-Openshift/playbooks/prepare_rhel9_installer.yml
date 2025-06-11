@@ -1,5 +1,5 @@
 ---
-- import_playbook: ../fetch_git_id.yml
+- import_playbook: fetch_git_id.yml
 - name: Prepare rhel 9.4 Installer VM to add worker nodes
   hosts: rhel9_installerVM
   gather_facts: True
