@@ -1,5 +1,6 @@
 ---     
   - name: Copy Execution environment
+    become: true
     block:
       - name: Copying ansible scripts to installer
         copy:
