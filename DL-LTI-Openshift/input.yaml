@@ -72,7 +72,7 @@ pool_id: 2c94760e887329bc018890fcda3c5143        #Pool ID for Redhat OpenShift C
 
 common:
    ifcfg_filename: ifcfg-bridge0                #network-scripts OS network filename with static IP, ifcfg-bridge0.230
-   interface_name: bridge0                      #ex. bridge0.230
+   interface_name: mgmt                      #ex. bridge0.230
    base_domain: isv.local                             #ex. isv.local
    reverse_zone: 20.180.10.in-addr.arpa
    app_domain: ocp.isv.local                           #ex. ocp.isv.local
