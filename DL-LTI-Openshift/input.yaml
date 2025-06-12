@@ -39,25 +39,25 @@ servers:
    corporate_proxy:               #provide corporate proxy, ex. proxy.houston.hpecorp.net
    corporate_proxy_port:                 #corporate proxy port no, ex. 8080
 
- - Server_serial_number: 3M1D0S139R
-   ILO_Address: 172.28.0.13
-   ILO_Username: admin
-   ILO_Password: Password!234
-   Hostname: headnode3.srihitha.local                #ex. headnode3.isv.local
-   Host_Username: root
-   Host_Password: Password!234
-   HWADDR1: 88:e9:a4:cb:32:f4             #mac address for server physical interface1
-   HWADDR2: 88:e9:a4:cb:32:f5             #mac address for server physical interface2
-   Host_OS_disk: sda
-   Host_VlanID:
-   Host_IP: 172.28.0.103
-   Host_Netmask: 255.255.255.0
-   Host_Prefix: 24                          #ex. 8,24,32
-   Host_Gateway: 172.28.0.2
-   Host_DNS: 172.28.0.2
-   Host_Domain: srihitha.local                       #ex. isv.local
-   corporate_proxy:               #provide corporate proxy, ex. proxy.houston.hpecorp.net
-   corporate_proxy_port:                #corporate proxy port no, ex. 8080
+#  - Server_serial_number: 3M1D0S139R
+#    ILO_Address: 172.28.0.13
+#    ILO_Username: admin
+#    ILO_Password: Password!234
+#    Hostname: headnode3.srihitha.local                #ex. headnode3.isv.local
+#    Host_Username: root
+#    Host_Password: Password!234
+#    HWADDR1: 88:e9:a4:cb:32:f4             #mac address for server physical interface1
+#    HWADDR2: 88:e9:a4:cb:32:f5             #mac address for server physical interface2
+#    Host_OS_disk: sda
+#    Host_VlanID:
+#    Host_IP: 172.28.0.103
+#    Host_Netmask: 255.255.255.0
+#    Host_Prefix: 24                          #ex. 8,24,32
+#    Host_Gateway: 172.28.0.2
+#    Host_DNS: 172.28.0.2
+#    Host_Domain: srihitha.local                       #ex. isv.local
+#    corporate_proxy:               #provide corporate proxy, ex. proxy.houston.hpecorp.net
+#    corporate_proxy_port:                #corporate proxy port no, ex. 8080
 
 config:
    HTTP_server_base_url: http://172.28.0.95/  #Installer IP address
