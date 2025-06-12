@@ -1,9 +1,4 @@
 ---
-
-  - name: Fetch base path
-    set_fact:
-        base_path: {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}/DL-LTI-Openshift
-        
   - name: populate service facts
     service_facts:
 
@@ -17,7 +12,7 @@
 
   - name: copy ignition files to matchbox
     copy:
-      src: "{{ base_path }}/playbooks/roles/generate_ignition_files/ignitions/bootstrap.ign"
+      src: "{{ dest_base_path }}/playbooks/roles/generate_ignition_files/ignitions/bootstrap.ign"
       dest: /var/lib/matchbox/ignition/
       remote_src: yes
       owner: root
@@ -26,7 +21,7 @@
 
   - name: copy ignition files to matchbox
     copy:
-      src: "{{ base_path }}/playbooks/roles/generate_ignition_files/ignitions/master.ign"
+      src: "{{ dest_base_path }}/playbooks/roles/generate_ignition_files/ignitions/master.ign"
       dest: /var/lib/matchbox/ignition/
       remote_src: yes
       owner: root
@@ -35,7 +30,7 @@
 
   - name: copy ignition files to matchbox
     copy:
-      src: "{{ base_path }}/playbooks/roles/generate_ignition_files/ignitions/worker.ign"
+      src: "{{ dest_base_path }}/playbooks/roles/generate_ignition_files/ignitions/worker.ign"
       dest: /var/lib/matchbox/ignition/
       remote_src: yes
       owner: root
