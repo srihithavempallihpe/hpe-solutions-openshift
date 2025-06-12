@@ -15,13 +15,13 @@
 ####
 
 ---
-    - name: copy profiles to back 
-      remote_src: yes
+    - name: copy profiles to back
       copy:
         src: "{{ dest_base_path }}/playbooks/roles/deploy_ipxe_ocp/files/{{ item }}"
         dest: /var/lib/matchbox/profiles/
         mode: 0775
         follow: yes
+        remote_src: yes
       with_items:
         - bootstrap.json
         - master.json
