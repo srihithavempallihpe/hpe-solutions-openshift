@@ -16,6 +16,7 @@
 
 ---
     - name: copy profiles to back 
+      
       copy:
         src: "{{ dest_base_path }}/playbooks/roles/deploy_ipxe_ocp/files/{{ item }}"
         dest: /var/lib/matchbox/profiles/
