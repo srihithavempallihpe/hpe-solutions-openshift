@@ -6,10 +6,10 @@
     #- libvirt-pythoni
 
 - name: Create PV for storage pool
-  command: pvcreate /dev/sdb
+  command: pvcreate /dev/sdc
 
 - name: Create volume group for storage pool
-  command: vgcreate {{virt_dir_storage_pool_vg}} /dev/sdb
+  command: vgcreate {{virt_dir_storage_pool_vg}} /dev/sdc
 
 - name: Create logical volume for storage pool
   lvol: vg={{virt_dir_storage_pool_vg}} lv={{virt_dir_storage_pool_lv}} size={{virt_dir_storage_pool_size}}
