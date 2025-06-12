@@ -21,6 +21,7 @@
         dest: /var/lib/matchbox/groups/
         mode: 0775
         follow: yes
+        remote_src: yes
       with_items:
         - bootstrap.json
         - master1.json
