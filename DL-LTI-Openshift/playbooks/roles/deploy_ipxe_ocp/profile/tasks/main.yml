@@ -15,13 +15,9 @@
 ####
 
 ---
-    - name: Fetch base path
-      set_fact:
-          base_path: {{ hostvars['morpheus_git_path']['morpheus_git_path'] }}/DL-LTI-Openshift
-          
     - name: copy profiles to back 
       copy:
-        src: "{{ base_path }}/playbooks/roles/deploy_ipxe_ocp/files/{{ item }}"
+        src: "{{ dest_base_path }}/playbooks/roles/deploy_ipxe_ocp/files/{{ item }}"
         dest: /var/lib/matchbox/profiles/
         mode: 0775
         follow: yes
