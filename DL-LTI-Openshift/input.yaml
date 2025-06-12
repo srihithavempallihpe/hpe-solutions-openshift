@@ -4,7 +4,7 @@ servers:
    ILO_Username: admin
    ILO_Password: Password!234
    Hostname: rvme1.isv.local               #ex. headnode1.isv.local
-   Host_Username: root
+   Host_Username: hpeadmin
    Host_Password: Password!234
    HWADDR1: 94:40:c9:a7:de:d4            #mac address for server physical interface1
    HWADDR2: 94:40:c9:a7:de:d5             #mac address for server physical interface2
@@ -24,13 +24,13 @@ servers:
    ILO_Username: admin
    ILO_Password: Password!234
    Hostname: headnode2.isv.local               #ex. headnode2.isv.local
-   Host_Username: root
+   Host_Username: hpeadmin
    Host_Password: Password!234
    HWADDR1: 88:e9:a4:0a:08:82             #mac address for server physical interface1
    HWADDR2: 88:e9:a4:0a:08:83             #mac address for server physical interface2
    Host_OS_disk: sda
    Host_VlanID:
-   Host_IP: 10.180.20.53
+   Host_IP: 10.180.20.152
    Host_Netmask: 255.255.255.0
    Host_Prefix: 24                    #ex. 8,24,32
    Host_Gateway: 10.180.20.2
@@ -44,13 +44,13 @@ servers:
    ILO_Username: admin
    ILO_Password: Password!234
    Hostname: headnode3.isv.local               #ex. headnode3.isv.local
-   Host_Username: root
+   Host_Username: hpeadmin
    Host_Password: Password!234
    HWADDR1: 94:40:c9:a7:ee:04             #mac address for server physical interface1
    HWADDR2: 94:40:c9:a7:ee:05             #mac address for server physical interface2
    Host_OS_disk: sda
    Host_VlanID:
-   Host_IP: 10.180.20.54
+   Host_IP: 10.180.20.153
    Host_Netmask: 255.255.255.0
    Host_Prefix: 24                          #ex. 8,24,32
    Host_Gateway: 10.180.20.2
