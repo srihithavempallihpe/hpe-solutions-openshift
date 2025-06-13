@@ -97,7 +97,6 @@
       -no-emul-boot {{ custom_iso_path }}
    
   - name: Copy custom ISO image to headnode1
-    become: true
     ansible.builtin.shell: >
       scp /tmp/ubuntu_installer_custom_iso.iso root@{{ hostvars[groups['kvm_nodes'][0]].ansible_host | default(groups['kvm_nodes'][0]) }}:/tmp/
 
