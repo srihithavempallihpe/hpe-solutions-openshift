@@ -83,7 +83,7 @@
   - name: Create custom ISO using xorriso for ubuntu vm
     command: >
       xorriso -as mkisofs -r -V '{{ ubuntu_installer_hostname }}'
-      -o /tmp/ubuntu_installer_custom_iso
+      -o /tmp/ubuntu_installer_custom_iso.iso
       --grub2-mbr {{ custom_iso_path }}-BOOT/1-Boot-NoEmul.img
       -partition_offset 16
       --mbr-force-bootable
@@ -99,7 +99,7 @@
   - name: Copy custom ISO image to headnode1
     become: true
     ansible.builtin.shell: >
-      scp /tmp/ubuntu-24.04.2-live-server-amd64.iso root@{{ hostvars[groups['kvm_nodes'][0]].ansible_host | default(groups['kvm_nodes'][0]) }}:/tmp/
+      scp /tmp/ubuntu_installer_custom_iso.iso root@{{ hostvars[groups['kvm_nodes'][0]].ansible_host | default(groups['kvm_nodes'][0]) }}:/tmp/
 
   - name: Create installer vm on VME node1
     shell:
