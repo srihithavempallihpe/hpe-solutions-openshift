@@ -123,7 +123,7 @@
     cmd: >-
           virt-install 
           --name ubuntuinstaller 
-          --ram 16000 
+          --memory 16000 
           --vcpus 4 
           --cpu host 
           --disk pool=mvm-volumes,size=250 
