@@ -192,12 +192,13 @@ vm_mem: 16000                       #VM RAM detail
 vm_size: 250                        #VM virtual disk size is in GB
 
 #Ubuntu Installer VM details
-ubuntu_installer_hostname: ubuntu-installer.srihitha.local
-ubuntu_installer_ip:
-ubuntu_installer_username:
-ubuntu_installer_password: 
-ubuntu_installer_host_prefix:
-ubuntu_installer_host_gateway:
-ubuntu_installer_host_nameserver: 
+ubuntu_installer_hostname: ubuntu-installer.isv.local
+ubuntu_installer_ip: 10.180.20.180
+ubuntu_installer_username: ubuntu 
+ubuntu_installer_password: Password!234
+ubuntu_installer_host_prefix: 24
+ubuntu_installer_host_gateway: 10.180.20.2
+ubuntu_installer_host_nameserver: 10.180.20.2
+ubuntu_installer_mac: 52:54:00:12:34:56
 
 
