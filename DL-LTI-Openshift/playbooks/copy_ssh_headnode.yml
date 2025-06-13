@@ -1,7 +1,6 @@
 ---
 - name: Copy ssh key to Head nodes
   hosts: localhost
-  become: yes
   gather_facts: False
   vars_files:
     - ../input.yaml
