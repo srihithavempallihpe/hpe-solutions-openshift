@@ -1,0 +1,136 @@
+---
+  - name: Ensure required packages are installed
+    apt:
+      name:
+        - p7zip
+        - xorriso
+      state: present
+      update_cache: yes
+
+  - name: Find ubuntu ISO file path
+    become: true
+    shell: |
+      find /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/ -type f -name "{{ config.OS_image_name }}" 2>/dev/null | head -n 1
+    register: iso_path
+    delegate_to: localhost
+    run_once: true
+
+  - name: Print all matching ISO files with full paths
+    debug:
+      var: iso_path.stdout
+    
+  - name: Set ISO full path as fact
+    set_fact:
+      iso_full_path: "{{ iso_path.stdout }}"
+    when: iso_path.stdout != ""
+    delegate_to: localhost
+
+  - name: Make ISO world-readable copy
+    become: true
+    shell: cp {{iso_full_path}} /tmp/ 
+    delegate_to: localhost
+    run_once: true
+  
+  - name: Create directory for custom ubuntu iso generation
+    file:
+      path: "/tmp/ubuntu_installer"
+      state: directory
+  
+  - name: set fact for ubuntu custom creation iso directory
+    set_fact:
+      custom_iso_path: /tmp/ubuntu_installer
+
+  - name: Extract ISO contents using 7z for ubuntu vm
+    command: "7z -y x {{ iso_full_path }} -o{{ custom_iso_path }}"
+    args:
+      creates: "{{ custom_iso_path }}/casper"
+
+- name: Move [BOOT] to BOOT for ubuntu vm
+  command: mv '{{  custom_iso_path }}/[BOOT]' {{ custom_iso_path }}-BOOT
+  args:
+    creates: "{{ custom_iso_path }}-BOOT"
+
+- name: Create nocloud directory for ubuntu vm
+  file:
+    path: "{{ custom_iso_path }}/nocloud"
+    state: directory
+
+- name: Create empty meta-data file
+  copy:
+    dest: "{{ custom_iso_path }}/nocloud/meta-data"
+    content: ""
+
+- name: Create user-data file from template
+  template:
+    src: user-data.j2
+    dest: "{{ custom_iso_path }}/nocloud/user-data"
+
+- name: Create grub.cfg
+  copy:
+    dest: "{{ custom_iso_path }}/boot/grub/grub.cfg"
+    content: |
+      set timeout=5
+
+      loadfont unicode
+
+      set menu_color_normal=white/black
+      set menu_color_highlight=black/light-gray
+
+      menuentry "Fully Automated Ubuntu 24.04 Install" {
+          set gfxpayload=keep
+          linux /casper/vmlinuz autoinstall ds=nocloud\;s=/cdrom/nocloud/ ---
+          initrd  /casper/initrd
+      }
+
+- name: Create custom ISO using xorriso for ubuntu vm
+  command: >
+    xorriso -as mkisofs -r -V '{{ ubuntu_installer_hostname }}'
+    -o /tmp/ubuntu_installer_custom_iso
+    --grub2-mbr {{ custom_iso_path }}-BOOT/1-Boot-NoEmul.img
+    -partition_offset 16
+    --mbr-force-bootable
+    -append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b {{ custom_iso_path }}-BOOT/2-Boot-NoEmul.img
+    -appended_part_as_gpt
+    -iso_mbr_part_type a2a0d0ebe5b9334487c068b6b72699c7
+    -c 'boot.catalog'
+    -b 'boot/grub/i386-pc/eltorito.img'
+    -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info
+    -eltorito-alt-boot -e '--interval:appended_partition_2:::' 
+    -no-emul-boot {{ custom_iso_path }}
+   
+  - name: Copy custom ISO image to headnode1
+    become: true
+    copy:
+      src: /tmp/ubuntu_installer_custom_iso
+      dest: /tmp/
+      owner: root
+      group: root
+      mode: 0644
+    vars:
+      ansible_user: root
+
+  - name: Create installer vm on VME node1
+    shell:
+      cmd: >-
+            sudo virt-install 
+            --name rhocpinstaller 
+            --ram 16000 
+            --vcpus 4 
+            --cpu host 
+            --disk pool=mvm-volumes,size=250 
+            --os-variant ubuntu24.04 
+            --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ubuntu_installer_mac}} \
+            --noautoconsole \
+            --console pty,target_type=serial \
+            --serial pty \
+            --boot cdrom,hd \
+            --autostart \
+            --cdrom /tmp/ubuntu_installer_custom_iso
+
+  - name: ping the VM to check it's reachable
+    wait_for:
+      port: 22
+      host: "{{ ubuntu_installer_IP }}"
+      search_regex: OpenSSH
+      delay: 10
+

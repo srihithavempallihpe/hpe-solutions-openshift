@@ -1,0 +1,10 @@
+---
+- name: Create Ubuntu Installer VM 
+  hosts: "{{ groups['kvm_nodes'][0] }}"
+  gather_facts: false
+  vars_files:
+    - ../input.yaml
+  roles:
+    - role: roles/ubuntu_installerVM
+   
+

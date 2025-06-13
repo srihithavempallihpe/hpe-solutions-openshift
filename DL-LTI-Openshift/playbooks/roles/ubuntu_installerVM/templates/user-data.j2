@@ -1,0 +1,35 @@
+#cloud-config
+autoinstall:
+  version: 1
+  identity:
+    hostname: {{ ubuntu_installer_hostname }}
+    username: {{ ubuntu_installer_username }}
+    password: {{ ubuntu_installer_password }}
+  keyboard:
+    layout: us
+  locale: en_US
+  network:
+    version: 2
+    ethernets:
+      enp1s0:
+        match:
+          name: e*
+        set-name: enp1s0
+        dhcp4: no
+        addresses:
+          - {{ ubuntu_installer_ip }}/{{ ubuntu_installer_host_prefix }}
+        routes:
+          - to: default
+            via: {{ ubuntu_installer_host_gateway }}
+        nameservers:
+          addresses:
+            - {{ ubuntu_installer_host_nameserver }}
+  storage:
+    layout:
+      name: lvm
+  ssh:
+    install-server: true
+  updates: security
+  late-commands:
+    - echo "Installation completed" > /root/install.log
+
