@@ -1,24 +1,23 @@
 servers:
-#  - Server_serial_number: 3M1D0S139S
-#    ILO_Address: 172.28.0.11
-#    ILO_Username: admin
-#    ILO_Password: Password!234
-#    Hostname: headnode1.srihitha.local                #ex. headnode1.isv.local
-#    Host_Username: admin
-#    Host_Password: Password!234
-#    HWADDR1: 88:e9:a4:cb:32:1c             #mac address for server physical interface1
-#    HWADDR2: 88:e9:a4:cb:32:1d             #mac address for server physical interface2
-#    Host_OS_disk: sda
-#    Host_VlanID:                          #solution VLAN ID ex. 230
-#    Host_IP: 172.28.0.101
-#    Host_Netmask: 255.255.255.0
-#    Host_Prefix: 24                          #ex. 8,24,32
-#    Host_Gateway: 172.28.0.2
-#    Host_DNS: 172.28.0.2
-#    Host_Domain: srihitha.local                       #ex. isv.local
-#    corporate_proxy:               #provide corporate proxy, ex. proxy.houston.company.net
-#    corporate_proxy_port:                  #corporate proxy port no, ex. 8080
-
+  - Server_serial_number: 2M205107TH
+   ILO_Address: 172.28.1.20
+   ILO_Username: admin
+   ILO_Password: Password!234
+   Hostname: rvme1.isv.local               #ex. headnode1.isv.local
+   Host_Username: root
+   Host_Password: Password!234
+   HWADDR1: 94:40:c9:a7:de:d4            #mac address for server physical interface1
+   HWADDR2: 94:40:c9:a7:de:d5             #mac address for server physical interface2
+   Host_OS_disk: sda
+   Host_VlanID:                          #solution VLAN ID ex. 230
+   Host_IP: 10.180.20.151
+   Host_Netmask: 255.255.255.0
+   Host_Prefix: 24                          #ex. 8,24,32
+   Host_Gateway: 10.180.20.2
+   Host_DNS: 10.180.20.2
+   Host_Domain: isv.local                       #ex. isv.local
+   corporate_proxy:               #provide corporate proxy, ex. proxy.houston.company.net
+   corporate_proxy_port:                 #corporate proxy port no, ex. 8080
 #  - Server_serial_number: 3M1D0S139T
 #    ILO_Address: 172.28.0.12
 #    ILO_Username: admin
