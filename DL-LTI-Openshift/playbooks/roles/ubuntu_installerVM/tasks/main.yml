@@ -121,7 +121,7 @@
 - name: Create installer vm on VME node1
   shell:
     cmd: >-
-          sudo virt-install 
+          virt-install 
           --name ubuntuinstaller 
           --ram 16000 
           --vcpus 4 
