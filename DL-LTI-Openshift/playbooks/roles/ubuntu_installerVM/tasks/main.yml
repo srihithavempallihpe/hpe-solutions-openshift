@@ -119,6 +119,7 @@
     mode: 0644
 
 - name: Create installer vm on VME node1
+  become: yes
   shell: >
     virt-install
     --name ubuntuinstaller
