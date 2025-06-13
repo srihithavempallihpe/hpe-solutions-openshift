@@ -1,5 +1,6 @@
 ---
 - name: Create Ubuntu Installer VM 
+  become: true
   hosts: localhost
   gather_facts: false
   vars_files:
