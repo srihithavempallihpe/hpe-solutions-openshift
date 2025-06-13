@@ -100,8 +100,6 @@
     become: true
     ansible.builtin.shell: >
       scp /tmp/ubuntu-24.04.2-live-server-amd64.iso root@{{ hostvars[groups['kvm_nodes'][0]].ansible_host | default(groups['kvm_nodes'][0]) }}:/tmp/
-    vars:
-      ansible_user: root
 
   - name: Create installer vm on VME node1
     shell:
