@@ -122,7 +122,7 @@
   shell:
     cmd: >-
           sudo virt-install 
-          --name rhocpinstaller 
+          --name ubuntuinstaller 
           --ram 16000 
           --vcpus 4 
           --cpu host 
