@@ -97,10 +97,9 @@
       -no-emul-boot {{ custom_iso_path }}
    
   - name: Copy custom ISO image to headnode1
-    become: yes
+    become: true
     ansible.builtin.shell: >
       scp /tmp/ubuntu-24.04.2-live-server-amd64.iso root@{{ hostvars[groups['kvm_nodes'][0]].ansible_host | default(groups['kvm_nodes'][0]) }}:/tmp/
-    delegate_to: localhost
     vars:
       ansible_user: root
 
