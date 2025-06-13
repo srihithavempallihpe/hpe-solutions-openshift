@@ -6,13 +6,13 @@
         - xorriso
       state: present
       update_cache: yes
+    ignore_errors: yes
 
   - name: Find ubuntu ISO file path
     become: true
     shell: |
       find /var/opt/morpheus/morpheus-ui/vms/morpheus-images/morpheus-virtual-images/ -type f -name "{{ config.OS_image_name }}" 2>/dev/null | head -n 1
     register: iso_path
-    delegate_to: localhost
     run_once: true
 
   - name: Print all matching ISO files with full paths
@@ -23,12 +23,10 @@
     set_fact:
       iso_full_path: "{{ iso_path.stdout }}"
     when: iso_path.stdout != ""
-    delegate_to: localhost
 
   - name: Make ISO world-readable copy
     become: true
     shell: cp {{iso_full_path}} /tmp/ 
-    delegate_to: localhost
     run_once: true
   
   - name: Create directory for custom ubuntu iso generation
