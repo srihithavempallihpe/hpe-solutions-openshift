@@ -119,22 +119,21 @@
     mode: 0644
 
 - name: Create installer vm on VME node1
-  - name: Create VM with virt-install
-    shell: >
-      virt-install
-      --name ubuntuinstaller
-      --memory 16000
-      --vcpus 4
-      --cpu host
-      --disk pool=mvm-volumes,size=250
-      --os-variant ubuntu24.04
-      --network network=Management,model=virtio,virtualport_type=openvswitch,mac=41135085286
-      --noautoconsole
-      --console pty,target_type=serial
-      --serial pty
-      --boot cdrom,hd
-      --autostart
-      --cdrom /tmp/ubuntu_installer_custom_iso
+  shell: >
+    virt-install
+    --name ubuntuinstaller
+    --memory 16000
+    --vcpus 4
+    --cpu host
+    --disk pool=mvm-volumes,size=250
+    --os-variant ubuntu24.04
+    --network network=Management,model=virtio,virtualport_type=openvswitch,mac=41135085286
+    --noautoconsole
+    --console pty,target_type=serial
+    --serial pty
+    --boot cdrom,hd
+    --autostart
+    --cdrom /tmp/ubuntu_installer_custom_iso
   delegate_to: "{{ groups['kvm_nodes'][0] }}" 
 
 - name: ping the VM to check it's reachable
