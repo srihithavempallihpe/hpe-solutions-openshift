@@ -198,6 +198,6 @@ ubuntu_installer_password: Password!234
 ubuntu_installer_host_prefix: 24
 ubuntu_installer_host_gateway: 10.180.20.2
 ubuntu_installer_host_nameserver: 10.180.20.2
-ubuntu_installer_mac: 52:54:00:12:34:46
+ubuntu_installer_mac: "52:54:00:12:34:42"
 
 
