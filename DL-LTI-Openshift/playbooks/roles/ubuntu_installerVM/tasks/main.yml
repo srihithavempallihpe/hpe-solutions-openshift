@@ -140,6 +140,6 @@
 - name: ping the VM to check it's reachable
   wait_for:
     port: 22
-    host: "{{ ubuntu_installer_IP }}"
+    host: "{{ ubuntu_installer_ip }}"
     search_regex: OpenSSH
     delay: 10
