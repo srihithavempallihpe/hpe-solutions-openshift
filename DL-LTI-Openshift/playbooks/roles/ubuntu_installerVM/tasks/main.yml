@@ -128,7 +128,7 @@
     --cpu host
     --disk pool=mvm-volumes,size=250
     --os-variant ubuntu24.04
-    --network network=Management,model=virtio,virtualport_type=openvswitch,mac='{{ ubuntu_installer_mac }}'
+    --network network=Management,model=virtio,virtualport_type=openvswitch,mac="{{ ubuntu_installer_mac }}"
     --noautoconsole
     --console pty,target_type=serial
     --serial pty
