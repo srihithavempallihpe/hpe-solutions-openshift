@@ -1,0 +1,59 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    daemon
+    maxconn 20000
+    user haproxy
+    group haproxy
+    stats socket /var/run/haproxy.sock mode 600 level admin
+    stats timeout 30s
+
+defaults
+    log global
+    mode tcp
+    option dontlognull
+    timeout connect 10s
+    timeout client 1m
+    timeout server 1m
+
+frontend api
+    bind *:6443
+    default_backend api_backend
+
+backend api_backend
+    balance roundrobin
+    server bootstrap bootstrap.{{ zone_name }}:6443 
+    server master1 master1.{{ zone_name }}:6443 
+    server master2 master2.{{ zone_name }}:6443 
+    server master3 master3.{{ zone_name }}:6443 
+
+frontend machine-config-server
+    bind *:22623
+    default_backend mcs_backend
+
+backend mcs_backend
+    balance roundrobin
+    server bootstrap bootstrap.{{ zone_name }}:22623 
+    server master1 master1.{{ zone_name }}:22623 
+    server master2 master2.{{ zone_name }}:22623 
+    server master3 master3.{{ zone_name }}:22623 
+
+frontend http
+    bind *:80
+    default_backend http_backend
+
+backend http_backend
+    balance roundrobin
+    server master1 master1.{{ zone_name }}:80 
+    server master2 master2.{{ zone_name }}:80 
+    server master3 master3.{{ zone_name }}:80 
+
+frontend https
+    bind *:443
+    default_backend https_backend
+
+backend https_backend
+    balance roundrobin
+    server master1 master1.{{ zone_name }}:443 
+    server master2 master2.{{ zone_name }}:443 
+    server master3 master3.{{ zone_name }}:443 

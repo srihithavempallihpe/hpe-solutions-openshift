@@ -1,0 +1,28 @@
+port=0
+interface={{ interface }}
+domain={{ zone_name }}
+dhcp-option=1,255.255.255.0
+dhcp-option=3,{{ gateway_ip }}
+dhcp-option=6,{{ dns_ip }}
+dhcp-range={{ ocp_bootstrap[0].ip }},{{ ocp_masters[2].ip }},24h
+listen-address=::1,127.0.0.1,{{ dns_ip }}
+dhcp-authoritative
+
+enable-tftp
+tftp-root=/var/lib/tftpboot/
+
+dhcp-match=set:bios,option:client-arch,0
+dhcp-boot=tag:bios,undionly.kpxe
+dhcp-match=set:efi32,option:client-arch,6
+dhcp-boot=tag:efi32,ipxe-x86_64.efi
+dhcp-match=set:efibc,option:client-arch,7
+dhcp-boot=tag:efibc,ipxe-x86_64.efi
+dhcp-match=set:efi64,option:client-arch,9
+dhcp-boot=tag:efi64,ipxe-x86_64.efi
+dhcp-userclass=set:ipxe,iPXE
+dhcp-boot=tag:ipxe,http://{{ dns_ip }}:8080/boot.ipxe
+
+dhcp-host={{ ocp_bootstrap[0].mac_address }},{{ ocp_bootstrap[0].ip }}
+dhcp-host={{ ocp_masters[0].mac_address }},{{ ocp_masters[0].ip }}
+dhcp-host={{ ocp_masters[1].mac_address }},{{ ocp_masters[1].ip }}
+dhcp-host={{ ocp_masters[2].mac_address }},{{ ocp_masters[2].ip }}

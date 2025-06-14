@@ -72,7 +72,7 @@ pool_id: 2c94760e887329bc018890fcda3c5143                         #Pool ID for R
 common:
    ifcfg_filename: ifcfg-bridge0                #network-scripts OS network filename with static IP, ifcfg-bridge0.230        
    interface_name: bridge0                      #ex. bridge0.230
-   base_domain: srihitha.local                             #ex. isv.local
+   base_domain: isv.local                             #ex. isv.local
    reverse_zone: 0.28.172.in-addr.arpa
    app_domain: ocp.srihitha.local                           #ex. ocp.isv.local
    customerforwarderdns_fqdn: resolver.hpecorp.net
@@ -198,6 +198,13 @@ ubuntu_installer_password: Password!234
 ubuntu_installer_host_prefix: 24
 ubuntu_installer_host_gateway: 10.180.20.2
 ubuntu_installer_host_nameserver: 10.180.20.2
-ubuntu_installer_mac: "52:54:00:12:34:42"
+ubuntu_installer_mac: 52:54:00:12:34:46
 
-
+cluster_subdomain: "ocp"
+dns_ip: "20.20.20.50"
+gateway_ip: "20.20.20.2"
+network_cidr: "20.20.20.0/24"
+interface: "eth0"
+interface: ens192              # or whatever your network interface is
+dns_ip: 172.28.0.100           # DNS server (often the HAProxy or dnsmasq host)
+zone_name: ocp.isv.local

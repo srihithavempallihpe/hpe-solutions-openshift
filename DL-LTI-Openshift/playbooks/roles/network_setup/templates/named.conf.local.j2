@@ -1,0 +1,11 @@
+zone "{{ zone_name }}" IN {
+    type master;
+    file "/etc/bind/forward.{{ zone_name }}";
+    allow-update { none; };
+};
+
+zone "{{ reverse_zone }}" IN {
+    type master;
+    file "/etc/bind/reverse.{{ zone_name }}";
+    allow-update { none; };
+};
