@@ -68,6 +68,10 @@
     dest: "{{ custom_iso_path }}/nocloud/meta-data"
     content: ""
   delegate_to: localhost
+  
+- name: Set hashed password for Ubuntu installer
+  set_fact:
+    ubuntu_installer_password_hashed: "{{ ubuntu_installer_password | password_hash('sha512') }}"
 
 - name: Create user-data file from template
   template:
