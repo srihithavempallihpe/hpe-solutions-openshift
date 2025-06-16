@@ -1,3 +1,9 @@
+- name: Update apt cache (best practice)
+  apt:
+    update_cache: yes
+  become: true
+  changed_when: false
+
 - name: Prepare hosts (Ubuntu)
   apt:
     name:
@@ -6,7 +12,6 @@
       - bind9-doc
       - firewalld
     state: present
-    update_cache: yes
 
 - name: Enable named service
   command: systemctl enable named
