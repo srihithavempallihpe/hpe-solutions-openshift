@@ -1,8 +1,8 @@
-- name: Update apt cache (best practice)
-  apt:
-    update_cache: yes
-  become: true
-  changed_when: false
+#- name: Update apt cache (best practice)
+#  apt:
+#    update_cache: yes
+#  become: true
+#  changed_when: false
 
 - name: Prepare hosts (Ubuntu)
   apt:
