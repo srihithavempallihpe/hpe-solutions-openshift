@@ -1,6 +1,6 @@
 - name: prepare hosts
   become: true
-  yum:
+  apt:
    name:
      - bind
      - bind-utils

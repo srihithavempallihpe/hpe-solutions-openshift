@@ -16,7 +16,7 @@
 
 ---
     - name: Install required yum packages 
-      yum:
+      apt:
         name:
           - dnsmasq
           - ipxe-bootimgs

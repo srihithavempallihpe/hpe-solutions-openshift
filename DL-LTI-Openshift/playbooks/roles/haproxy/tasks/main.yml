@@ -5,7 +5,7 @@
     state: disabled
 
 - name: Install Haproxy package
-  yum:
+  apt:
     name: haproxy
     state: present
 
@@ -24,7 +24,7 @@
 
       
 - name: Install keepalived package
-  yum:
+  apt:
    name:
      - keepalived
      - psmisc
