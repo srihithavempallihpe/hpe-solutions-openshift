@@ -1,3 +1,3 @@
 ---
    - name: Copy ssh key to VM
-     shell: "sshpass -p '{{ rhel9_installer_password }}' ssh-copy-id -f -o StrictHostKeyChecking=no root@{{ rhel9_installer_IP }}"
+     shell: "sshpass -p '{{ ubuntu_installer_password }}' ssh-copy-id -f -o StrictHostKeyChecking=no root@{{ ubuntu_installer_ip }}"
