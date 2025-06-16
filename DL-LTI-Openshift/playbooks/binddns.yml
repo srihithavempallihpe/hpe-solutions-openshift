@@ -3,6 +3,7 @@
   become: yes
   gather_facts: no
   vars_files: ../input.yaml
+  remote_user: root
   roles:
     - { role: roles/binddns/preinstall }
 
