@@ -9,8 +9,6 @@ options {
         recursing-file  "/var/named/data/named.recursing";
         allow-query     { localhost; {{ common.solution_subnet_ip }}; };
         allow-transfer { localhost; }
-        {{ hostvars[host]['ip'] }};
-        {% endfor %}
         };
         forwarders { 
         {{ solution_network_ip }};
