@@ -22,20 +22,20 @@
   roles:
     - { role: roles/binddns/masters-networks }
 
-- hosts: infra_vm
-  become: yes
-  gather_facts: true
-  vars_files: ../input.yaml
-  remote_user: root
-  roles:
-    - { role: roles/binddns/slaves }
+#- hosts: infra_vm
+#  become: yes
+#  gather_facts: true
+#  vars_files: ../input.yaml
+#  remote_user: root
+#  roles:
+#    - { role: roles/binddns/slaves }
 
-- hosts: infra_vm
-  become: yes
-  gather_facts: no
-  vars_files: ../input.yaml
-  remote_user: root
-  roles:
-    - { role: roles/binddns/slaves-networks }
+#- hosts: infra_vm
+#  become: yes
+#  gather_facts: no
+#  vars_files: ../input.yaml
+#  remote_user: root
+#  roles:
+#    - { role: roles/binddns/slaves-networks }
 
 
