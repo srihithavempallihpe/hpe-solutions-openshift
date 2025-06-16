@@ -1,8 +1,7 @@
----
-    
-- name: disable selinux
-  selinux:
-    state: disabled
+---   
+#- name: disable selinux
+#  selinux:
+#    state: disabled
 
 - name: Install Haproxy package
   apt:
