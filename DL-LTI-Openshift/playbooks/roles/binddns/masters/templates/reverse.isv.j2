@@ -1,6 +1,6 @@
 $TTL 86400
 
-{% for host in groups['masters_info'] %}
+{% for host in groups['infra_vm'] %}
 @            IN SOA {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}. root.{{ common.base_domain }}. (
 {% endfor %}
 
@@ -16,31 +16,19 @@ $TTL 86400
 
 
 
-{% for host in groups['masters_info'] %}
-@         IN          NS         {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}.
-{% endfor %}
-
-{% for host in groups['slaves_info'] %}
+{% for host in groups['infra_vm'] %}
 @         IN          NS         {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}.
 {% endfor %}
 
 @          IN         PTR        {{ common.base_domain }}.
 
 
-{% for host in groups['masters_info'] %}
-@          IN         A            {{ hostvars[host]['ip'] }}
-{% endfor %}
-
-{% for host in groups['slaves_info'] %}
+{% for host in groups['infra_vm'] %}
 @          IN         A            {{ hostvars[host]['ip'] }}
 {% endfor %}
 
 
-{% for host in groups['masters_info'] %}
-{{ hostvars[host]['ip'].split('.')[::-1][:1] | join('.') }}                      IN     PTR          {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}.
-{% endfor %}
-
-{% for host in groups['slaves_info'] %}
+{% for host in groups['infra_vm'] %}
 {{ hostvars[host]['ip'].split('.')[::-1][:1] | join('.') }}                      IN     PTR          {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}.
 {% endfor %}
 
