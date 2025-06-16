@@ -4,8 +4,9 @@
     name:
       - bind9
       - dnsutils
-      - python3-six
-    state: latest
+      - bind9utils
+      - bind9-doc
+    state: present
     update_cache: yes
 
 - name: Enable named service
