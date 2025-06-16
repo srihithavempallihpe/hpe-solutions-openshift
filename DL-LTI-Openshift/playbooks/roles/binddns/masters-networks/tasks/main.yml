@@ -14,7 +14,7 @@
 - name: Add nameserver in resolv.conf file
   lineinfile:
     path: /etc/resolv.conf
-    line: "nameserver {{ infra_vm }}"
+    line: "nameserver {{ ubuntu_installer_ip }}"
 
 
 #- name: Replace domain in network scripts file
