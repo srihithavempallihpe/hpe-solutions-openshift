@@ -14,25 +14,25 @@
 - name: Add nameserver in resolv.conf file
   lineinfile:
     path: /etc/resolv.conf
-    line: "nameserver {{ master_binddns }}"
+    line: "nameserver {{ infra_vm }}"
 
 
-- name: Replace domain in network scripts file
-  lineinfile:
-    path: /etc/sysconfig/network-scripts/{{ common.ifcfg_filename }}
-    regexp: "DOMAIN*"
-    line: 'DOMAIN={{ common.base_domain }}'
+#- name: Replace domain in network scripts file
+#  lineinfile:
+#    path: /etc/sysconfig/network-scripts/{{ common.ifcfg_filename }}
+#    regexp: "DOMAIN*"
+#    line: 'DOMAIN={{ common.base_domain }}'
 
-- name: Add master DNS in network scripts file
-  lineinfile:
-    path: /etc/sysconfig/network-scripts/{{ common.ifcfg_filename }}
-    regexp: "DNS1*"
-    line: 'DNS1={{ master_binddns }}'
+#- name: Add master DNS in network scripts file
+#  lineinfile:
+#    path: /etc/sysconfig/network-scripts/{{ common.ifcfg_filename }}
+#    regexp: "DNS1*"
+#    line: 'DNS1={{ master_binddns }}'
 
--  name: Restart the service
-   service:
-         name: NetworkManager
-         state: restarted
-         enabled: true
+#-  name: Restart the service
+#   service:
+#         name: NetworkManager
+#         state: restarted
+#         enabled: true
 
         
