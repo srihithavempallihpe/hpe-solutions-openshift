@@ -1,15 +1,13 @@
-#- name: Prepare hosts (Ubuntu)
-#  apt:
-#    name:
-#      - bind9
-#      - dnsutils
-#      - bind9utils
-#      - bind9-doc
-#    state: present
-#    update_cache: yes
-
-- name: Debug Python six
-  command: python3 -c "import six.moves"
+- name: Prepare hosts (Ubuntu)
+  apt:
+    name:
+      - bind9
+      - dnsutils
+      - bind9utils
+      - bind9-doc
+      - firewalld
+    state: present
+    update_cache: yes
 
 - name: Enable named service
   command: systemctl enable named
