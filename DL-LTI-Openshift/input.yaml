@@ -87,7 +87,7 @@ master_binddns: 10.180.20.151
 slave1_binddns: 10.180.20.152
 slave2_binddns: 10.180.20.153
 
-VIP: 10.180.20.160
+VIP: 10.180.20.180
 VIP_Prefix: 24
 haproxy_fqdn: haproxy.ocp.isv.local
 
