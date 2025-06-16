@@ -1,7 +1,7 @@
 $TTL 86400
 
 {% for host in groups['infra_vm'] %}
-@            IN SOA {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}. root.{{ common.base_domain }}. (
+@            IN SOA {{ ubuntu_installer_hostname }}.{{ common.base_domain }}. root.{{ common.base_domain }}. (
 {% endfor %}
 
 2011071001 ; serial
@@ -17,19 +17,19 @@ $TTL 86400
 
 
 {% for host in groups['infra_vm'] %}
-@         IN          NS         {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}.
+@         IN          NS         {{ ubuntu_installer_hostname }}.{{ common.base_domain }}.
 {% endfor %}
 
 @          IN         PTR        {{ common.base_domain }}.
 
 
 {% for host in groups['infra_vm'] %}
-@          IN         A            {{ hostvars[host]['ip'] }}
+@          IN         A            {{ ubuntu_installer_ip }}
 {% endfor %}
 
 
 {% for host in groups['infra_vm'] %}
-{{ hostvars[host]['ip'].split('.')[::-1][:1] | join('.') }}                      IN     PTR          {{ hostvars[host]['hostname'] }}.{{ common.base_domain }}.
+{{ ubuntu_installer_ip.split('.')[::-1][:1] | join('.') }}                      IN     PTR          {{ ubuntu_installer_hostname }}.{{ common.base_domain }}.
 {% endfor %}
 
 {% for item in ocp_bootstrap %}
