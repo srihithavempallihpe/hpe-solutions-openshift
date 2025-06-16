@@ -2,7 +2,6 @@
   apt:
     name:
       - bind9
-      - dnsutils
       - bind9utils
       - bind9-doc
       - firewalld
