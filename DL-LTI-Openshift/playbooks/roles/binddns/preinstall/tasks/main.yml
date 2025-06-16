@@ -1,5 +1,4 @@
 - name: Prepare hosts (Ubuntu)
-  become: true
   apt:
     name:
       - bind9
