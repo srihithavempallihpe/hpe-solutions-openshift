@@ -1,5 +1,5 @@
 ---
-- hosts: kvm_nodes
+- hosts: infra_vm
   vars_files: ../input.yaml
   gather_facts: True
   roles:
