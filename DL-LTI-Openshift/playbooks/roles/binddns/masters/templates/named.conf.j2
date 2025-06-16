@@ -8,7 +8,7 @@ options {
         secroots-file   "/var/named/data/named.secroots";
         recursing-file  "/var/named/data/named.recursing";
         allow-query     { localhost; {{ common.solution_subnet_ip }}; };
-        allow-transfer { localhost; {% for host in groups['slaves_info'] %}
+        allow-transfer { localhost; }
         {{ hostvars[host]['ip'] }};
         {% endfor %}
         };
