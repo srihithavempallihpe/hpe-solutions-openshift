@@ -1,116 +1,72 @@
-###
-## Copyright (2020) Hewlett Packard Enterprise Development LP
-##
-## Licensed under the Apache License, Version 2.0 (the "License");
-## You may not use this file except in compliance with the License.
-## You may obtain a copy of the License at
-##
-## http://www.apache.org/licenses/LICENSE-2.0
-##
-## Unless required by applicable law or agreed to in writing, software
-## distributed under the License is distributed on an "AS IS" BASIS,
-## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-## See the License for the specific language governing permissions and
-## limitations under the License.
-####
-
 ---
-    
-    - name: Install required yum packages 
-      apt:
-        name:
-          - dnsmasq
-        state: present
+- name: Install required apt packages
+  apt:
+    name: dnsmasq
+    state: present
+  become: yes
 
+- name: Check if /etc/dnsmasq.conf.bakup exists
+  stat:
+    path: /etc/dnsmasq.conf.bakup
+  register: dnsmasq_backup_check
 
-    - name: Check that the dnsmasq.conf.bakup exists
-      stat:
-        path: /etc/dnsmasq.conf.bakup
-      register: stat_result
+- name: Backup original /etc/dnsmasq.conf if not already backed up
+  copy:
+    src: /etc/dnsmasq.conf
+    dest: /etc/dnsmasq.conf.bakup
+    remote_src: yes
+    mode: '0644'
+  when: not dnsmasq_backup_check.stat.exists
 
-    - name: backup dns config
-      copy:
-        src: "/etc/dnsmasq.conf"
-        dest: "/etc/dnsmasq.conf.bakup"
-        remote_src: yes
-        mode: 0775
-      when: stat_result.stat.exists == False
+- name: Insert DHCP scope settings in /etc/dnsmasq.conf
+  blockinfile:
+    path: /etc/dnsmasq.conf
+    marker: "# {mark} ANSIBLE MANAGED DHCP SCOPE BLOCK"
+    block: |
+      interface={{ common.interface_name }}
+      port=0
+      domain={{ common.base_domain }}
+      dhcp-option=1,{{ servers[0].Host_Netmask }}
+      dhcp-option=3,{{ servers[0].Host_Gateway }}
+      dhcp-option=6,{{ master_binddns }},{{ slave1_binddns }},{{ slave2_binddns }}
+      dhcp-range={{ dhcp_range }}
+      listen-address=::1,127.0.0.1,{{ master_binddns }}
+      dhcp-authoritative
+  become: yes
 
-    - name: Fetch base path
-      set_fact:
-        git_base_path: "{{ hostvars['localhost']['morpheus_git_path'] }}/DL-LTI-Openshift"
-          
-    - name: print base path value
-      debug:
-        var: git_base_path
+- name: Insert static MAC to IP mapping block
+  blockinfile:
+    path: /etc/dnsmasq.conf
+    marker: "# {mark} ANSIBLE MANAGED STATIC MAPPINGS"
+    block: |
+      {% for item in ocp_bootstrap %}
+      dhcp-host={{ item.mac_address }},{{ item.ip }}
+      {% endfor %}
+      {% for item in ocp_masters %}
+      dhcp-host={{ item.mac_address }},{{ item.ip }}
+      {% endfor %}
+      {% for item in ocp_workers %}
+      dhcp-host={{ item.mac_address }},{{ item.ip }}
+      {% endfor %}
+  become: yes
 
-    - name: copy Dnsconfig to back
-      copy:
-        src: "/etc/dnsmasq.conf.bakup"
-        dest: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf.org"
-        remote_src: yes
-        mode: 0775
+- name: Verify dnsmasq configuration
+  command: dnsmasq --test
+  register: dnsmasq_test
+  changed_when: false
+  failed_when: "'syntax check OK' not in dnsmasq_test.stdout"
 
-    - name: Create local dnsconfig
-      copy:
-        src: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf.org"
-        dest: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
-        remote_src: yes
-        mode: 0775
-        follow: yes
+- name: Enable and restart dnsmasq service
+  service:
+    name: dnsmasq
+    state: restarted
+    enabled: yes
+  become: yes
 
-    - name: Insert a block at the end of a file.
-      blockinfile:
-        path: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
-        marker: "# This DHCP scope settings"
-        block: |
-          interface={{ common.interface_name }}
-          port=0
-          domain={{ common.base_domain }}
-          dhcp-option=1,{{ servers[0].Host_Netmask }}
-          dhcp-option=3,{{ servers[0].Host_Gateway }}
-          dhcp-option=6,{{ master_binddns }},{{ slave1_binddns }},{{ slave2_binddns }}
-          dhcp-range={{ dhcp_range }}
-          listen-address=::1,127.0.0.1,{{ master_binddns }}
-          dhcp-authoritative
-
-    - name: Insert a block at the end of a file.
-      blockinfile:
-        path: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
-        marker: "# This mac to ip static mapping"
-        block: |
-          {% for item in ocp_bootstrap %}
-          dhcp-host={{ item.mac_address }},{{ item.ip }}
-          {% endfor %}
-          {% for item in ocp_masters %}
-          dhcp-host={{ item.mac_address }},{{ item.ip }}
-          {% endfor %}
-          {% for item in ocp_workers %}
-          dhcp-host={{ item.mac_address }},{{ item.ip }}
-          {% endfor %}
-
-    - name: Create local dnsconfig
-      copy:
-        src: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
-        dest: /etc/dnsmasq.conf
-        remote_src: yes
-        mode: 0775
-        follow: yes
-
-    - name: verify dnsmasq configuration
-      command: dnsmasq --test
-
-    - name: Enable and start dnsmasq service
-      service:
-        name: dnsmasq
-        enabled: yes
-        state: restarted
-
-    - name : Configure firewall to allow services
-      firewalld:
-        service: "{{ item }}"
-        permanent: yes
-        immediate: yes
-        state: enabled
-      with_items:
-        - dhcp
+- name: Open DHCP service in firewall
+  firewalld:
+    service: dhcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: yes
