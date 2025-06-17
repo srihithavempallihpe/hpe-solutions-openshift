@@ -1,0 +1,132 @@
+---
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - wget
+          - curl
+          - git
+          - pkg-config
+          - libssl-dev
+          - libzstd-dev
+          - libudev-dev
+          - build-essential
+        state: present
+        update_cache: yes
+
+    - name: Create install directory
+      file:
+        path: "{{ install_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Download OCP installer bundle
+      get_url:
+        url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/{{ ocp_version }}/openshift-install-linux-{{ ocp_version }}.tar.gz"
+        dest: "{{ install_dir }}/openshift-install.tgz"
+        mode: "0755"
+      register: download_installer
+
+    - name: Extract installer and move binaries
+      unarchive:
+        src: "{{ install_dir }}/openshift-install.tgz"
+        dest: "{{ install_dir }}"
+        remote_src: yes
+        creates: "{{ install_dir }}/openshift-install"
+      when: download_installer.changed
+
+    - name: Move binaries to /usr/local/bin
+      copy:
+        src: "{{ install_dir }}/{{ item }}"
+        dest: "/usr/local/bin/{{ item }}"
+        mode: "0755"
+      loop:
+        - openshift-install
+        - oc
+        - kubectl
+
+    - name: Create install-config.yaml
+      template:
+        src: install-config.yaml.j2
+        dest: "{{ install_dir }}/install-config.yaml"
+        mode: "0644"
+
+    - name: Copy install-config.yaml to /tmp
+      copy:
+        src: "{{ install_dir }}/install-config.yaml"
+        dest: "/tmp/install-config.yaml"
+        mode: "0644"
+
+    - name: Generate OpenShift manifests
+      command: >
+        openshift-install create manifests --dir="{{ install_dir }}"
+      args:
+        chdir: "{{ install_dir }}"
+      environment:
+        HOME: "{{ ansible_env.HOME }}"
+
+    - name: Generate Ignition configs
+      command: >
+        openshift-install create ignition-configs --dir="{{ install_dir }}"
+      args:
+        chdir: "{{ install_dir }}"
+
+    - name: Clone or update coreos-installer source
+      git:
+        repo: https://github.com/coreos/coreos-installer.git
+        dest: "{{ install_dir }}/coreos-installer"
+        update: yes
+
+    - name: Build coreos-installer
+      command: cargo build --release
+      args:
+        chdir: "{{ install_dir }}/coreos-installer"
+
+    - name: Install coreos-installer binary
+      copy:
+        src: "{{ install_dir }}/coreos-installer/target/release/coreos-installer"
+        dest: /usr/local/bin/coreos-installer
+        mode: "0755"
+
+    - name: Compute RHCOS ISO download URL prefix
+      set_fact:
+        ocp_minor: "{{ ocp_version.split('.')[0:2] | join('.') }}"
+
+    - name: Download RHCOS live ISO
+      get_url:
+        url: >
+          https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/{{ ocp_minor }}/latest/rhcos-live.x86_64.iso
+        dest: "{{ install_dir }}/rhcos-live.x86_64.iso"
+        mode: "0644"
+
+    - name: Customize RHCOS for bootstrap
+      command: >
+        coreos-installer iso customize
+        --dest-device /dev/vda
+        --dest-ignition "{{ install_dir }}/bootstrap.ign"
+        -o "{{ install_dir }}/rhcos-bootstrap.iso"
+        "{{ install_dir }}/rhcos-live.x86_64.iso"
+
+    - name: Customize RHCOS for master
+      command: >
+        coreos-installer iso customize
+        --dest-device /dev/vda
+        --dest-ignition "{{ install_dir }}/master.ign"
+        -o "{{ install_dir }}/rhcos-master.iso"
+        "{{ install_dir }}/rhcos-live.x86_64.iso"
+
+    - name: Customize RHCOS for worker
+      command: >
+        coreos-installer iso customize
+        --dest-device /dev/vda
+        --dest-ignition "{{ install_dir }}/worker.ign"
+        -o "{{ install_dir }}/rhcos-worker.iso"
+        "{{ install_dir }}/rhcos-live.x86_64.iso"
+
+    - name: Set execute bits on customized ISOs
+      file:
+        path: "{{ install_dir }}/rhcos-{{ item }}.iso"
+        mode: "0755"
+      loop:
+        - bootstrap
+        - master
+        - worker
