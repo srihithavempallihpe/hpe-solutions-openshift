@@ -13,7 +13,7 @@
 
 - name: Compute zone names
   set_fact:
-    zone_name: "{{ cluster_subdomain }}.{{ common.base_domain }}"
+    zone_name: "{{ common.cluster_subdomain }}.{{ common.base_domain }}"
     reverse_zone: "{{ dns_forwarder.ip.split('.')[:3] | reverse | join('.') }}.in-addr.arpa"
 
 - name: Configure named.conf.options
