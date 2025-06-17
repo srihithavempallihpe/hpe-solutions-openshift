@@ -14,7 +14,7 @@
 - name: Compute zone names
   set_fact:
     zone_name: "{{ common.cluster_subdomain }}.{{ common.base_domain }}"
-    reverse_zone: "{{ dns_forwarder.ip.split('.')[:3] | reverse | join('.') }}.in-addr.arpa"
+    reverse_zone: "{{ common.reverse_zone }}"
 
 - name: Configure named.conf.options
   template:
