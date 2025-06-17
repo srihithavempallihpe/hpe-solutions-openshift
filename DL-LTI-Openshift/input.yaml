@@ -162,7 +162,7 @@ yumrepo:                                #10.0.x.x
 interface_name: enp1s0
 
 # dhcp range that is used for OCP nodes Example: dhcp_range: 192.168.42.204,192.168.42.210,24h
-dhcp_range: 10.180.20.182,10.180.20.190
+dhcp_range: 10.180.20.190,10.180.20.198
 
 # DO not change these details
 # install media details Example: image_location: "/tmp/image/"
