@@ -60,18 +60,19 @@
         - oc
         - kubectl
 
-
     - name: Create install-config.yaml
       template:
         src: install-config.yaml.j2
         dest: "{{ install_dir }}/install-config.yaml"
         mode: "0644"
+        remote_src: yes
 
     - name: Copy install-config.yaml to /tmp
       copy:
         src: "{{ install_dir }}/install-config.yaml"
         dest: "/tmp/install-config.yaml"
         mode: "0644"
+        remote_src: yes
 
     - name: Generate OpenShift manifests
       command: >
