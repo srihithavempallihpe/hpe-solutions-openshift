@@ -92,6 +92,18 @@
         repo: https://github.com/coreos/coreos-installer.git
         dest: "{{ install_dir }}/coreos-installer"
         update: yes
+    
+    - name: Install Rust (includes cargo)
+      ansible.builtin.shell: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        creates: /root/.cargo/bin/cargo
+
+    - name: Ensure Rust environment is sourced
+      ansible.builtin.shell: |
+        source $HOME/.cargo/env
+      args:
+        executable: /bin/bash
 
     - name: Build coreos-installer
       command: cargo build --release
