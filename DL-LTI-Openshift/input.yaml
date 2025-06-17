@@ -151,7 +151,7 @@ pull_secret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZ
 
 #Path to ISV-OpenShift-develop Directory; Example: /opt/Openshift-Synergy-RA-LTI-OCP-4.12/DL-LTI-Openshift(no trailing forwardslash required)
 dest_base_path: '/opt/hpe-solutions-openshift/DL-LTI-Openshift'
-install_dir: '/root/ocp-install/'
+install_dir: '/root/ocp-install'
 
 #Is Environment Airgapped; ('yes' or 'no'):
 is_environment_airgap: 'no'

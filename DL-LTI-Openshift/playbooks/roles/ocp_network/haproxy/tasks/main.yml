@@ -1,0 +1,54 @@
+---   
+- name: Install Haproxy package
+  apt:
+    name: haproxy
+    state: present
+
+- name: Stop Haproxy service if running already
+  service:
+    name: haproxy
+    state: stopped
+
+- name: Dynamically copying HAproxy Configuration file
+  template:
+    src: ./haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart HAProxy Service
+  service:
+    name: haproxy
+    state: started
+    enabled: true
+        
+- name: Allow HTTPS to the firewall
+  firewalld:
+    service: https
+    permanent: true
+    state: enabled
+
+- name: Add TCP ports to the firewall
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  with_items:
+    - 6443/tcp
+    - 22623/tcp
+    - 80/tcp
+    - 443/tcp
+
+- name: Reload firewall service
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: Permit TCP ports and services in firewall rule
+  shell: |
+       firewall-cmd --add-service={http,https} --permanent
+       firewall-cmd --add-port={6443,22623}/tcp --permanent
+       firewall-cmd --reload
+  become: true
+    
