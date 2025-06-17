@@ -1,0 +1,8 @@
+---
+- name: Copy custom iso to VME nodes
+  hosts: kvm_nodes
+  gather_facts: no
+  vars_files:
+    - ../input.yaml
+  roles:
+    - role: roles/copy_custom_iso
