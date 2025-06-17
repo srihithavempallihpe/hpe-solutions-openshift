@@ -36,25 +36,32 @@
         mode: 0775
       when: stat_result.stat.exists == False
 
+    - name: Fetch base path
+      set_fact:
+        git_base_path: "{{ hostvars['localhost']['morpheus_git_path'] }}/DL-LTI-Openshift"
+          
+    - name: print base path value
+      debug:
+        var: git_base_path
 
     - name: copy Dnsconfig to back
       copy:
         src: "/etc/dnsmasq.conf.bakup"
-        dest: "{{ dest_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf.org"
+        dest: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf.org"
         remote_src: yes
         mode: 0775
 
     - name: Create local dnsconfig
       copy:
-        src: "{{ dest_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf.org"
-        dest: "{{ dest_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
+        src: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf.org"
+        dest: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
         remote_src: yes
         mode: 0775
         follow: yes
 
     - name: Insert a block at the end of a file.
       blockinfile:
-        path: "{{ dest_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
+        path: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
         marker: "# This DHCP scope settings"
         block: |
           interface={{ common.interface_name }}
@@ -69,7 +76,7 @@
 
     - name: Insert a block at the end of a file.
       blockinfile:
-        path: "{{ dest_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
+        path: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
         marker: "# This mac to ip static mapping"
         block: |
           {% for item in ocp_bootstrap %}
@@ -84,7 +91,7 @@
 
     - name: Create local dnsconfig
       copy:
-        src: "{{ dest_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
+        src: "{{ git_base_path }}/playbooks/roles/dnsmasq/templates/dnsmasq.conf"
         dest: /etc/dnsmasq.conf
         remote_src: yes
         mode: 0775
