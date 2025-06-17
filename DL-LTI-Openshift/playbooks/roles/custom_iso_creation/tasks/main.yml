@@ -19,22 +19,37 @@
         state: directory
         mode: "0755"
 
-    - name: Download OCP installer bundle
+    - name: Download OCP installer bundle (openshift-install)
       get_url:
         url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/{{ ocp_version }}/openshift-install-linux-{{ ocp_version }}.tar.gz"
-        dest: "{{ install_dir }}/openshift-install.tgz"
+        dest: "{{ install_dir }}/openshift-install-{{ ocp_version }}.tar.gz"
         mode: "0755"
       register: download_installer
 
-    - name: Extract installer and move binaries
+    - name: Extract openshift-install binary
       unarchive:
-        src: "{{ install_dir }}/openshift-install.tgz"
+        src: "{{ install_dir }}/openshift-install-{{ ocp_version }}.tar.gz"
         dest: "{{ install_dir }}"
         remote_src: yes
         creates: "{{ install_dir }}/openshift-install"
       when: download_installer.changed
 
-    - name: Move binaries to /usr/local/bin
+    - name: Download OCP client bundle (oc and kubectl)
+      get_url:
+        url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/{{ ocp_version }}/openshift-client-linux-{{ ocp_version }}.tar.gz"
+        dest: "{{ install_dir }}/openshift-client-{{ ocp_version }}.tar.gz"
+        mode: "0755"
+      register: download_client
+
+    - name: Extract oc and kubectl binaries
+      unarchive:
+        src: "{{ install_dir }}/openshift-client-{{ ocp_version }}.tar.gz"
+        dest: "{{ install_dir }}"
+        remote_src: yes
+        creates: "{{ install_dir }}/oc"
+      when: download_client.changed
+
+    - name: Move OCP binaries to /usr/local/bin
       copy:
         src: "{{ install_dir }}/{{ item }}"
         dest: "/usr/local/bin/{{ item }}"
@@ -43,6 +58,7 @@
         - openshift-install
         - oc
         - kubectl
+
 
     - name: Create install-config.yaml
       template:
