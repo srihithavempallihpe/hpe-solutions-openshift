@@ -1,10 +1,17 @@
-- name: prepare hosts
-  become: true
+#- name: Update apt cache (best practice)
+#  apt:
+#    update_cache: yes
+#  become: true
+#  changed_when: false
+
+- name: Prepare hosts (Ubuntu)
   apt:
-   name:
-     - bind
-     - bind-utils
-   state: latest
+    name:
+      - bind9
+      - bind9utils
+      - bind9-doc
+      - firewalld
+    state: present
 
 - name: Enable named service
   command: systemctl enable named
