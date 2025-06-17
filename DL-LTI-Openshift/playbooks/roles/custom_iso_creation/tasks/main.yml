@@ -105,12 +105,13 @@
       args:
         executable: /bin/bash
 
-    - name: Build coreos-installer with cargo
+    - name: Build coreos-installer
       ansible.builtin.shell: |
         source $HOME/.cargo/env
         cargo build --release
       args:
         chdir: /root/ocp-install/coreos-installer
+        executable: /bin/bash
 
     - name: Install coreos-installer binary
       copy:
