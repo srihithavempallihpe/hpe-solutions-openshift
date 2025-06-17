@@ -1,11 +1,11 @@
 acl internal-network {
-    {{ network_cidr }};
+    {{ common.solution_subnet_ip }};
 };
 options {
     directory "/var/cache/bind";
     allow-query { localhost; internal-network; };
     allow-transfer { localhost; };
-    forwarders { {{ gateway_ip }}; };
+    forwarders { {{ common.gateway_ip }}; };
     recursion yes;
     dnssec-validation auto;
     listen-on-v6 { any; };

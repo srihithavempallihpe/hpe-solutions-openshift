@@ -8,11 +8,11 @@ $TTL    604800
 
 @       IN      NS      haproxy.{{ zone_name }}.
 @       IN      A       {{ dns_ip }}
-haproxy.{{ zone_name }}.     IN A {{ dns_ip }}
+haproxy.{{ zone_name }}.     IN A {{ ubuntu_installer_ip }}
 bootstrap.{{ zone_name }}.   IN A {{ ocp_bootstrap[0].ip }}
 master1.{{ zone_name }}.     IN A {{ ocp_masters[0].ip }}
 master2.{{ zone_name }}.     IN A {{ ocp_masters[1].ip }}
 master3.{{ zone_name }}.     IN A {{ ocp_masters[2].ip }}
-api.{{ zone_name }}.         IN A {{ dns_ip }}
-api-int.{{ zone_name }}.     IN A {{ dns_ip }}
-*.apps.{{ zone_name }}.      IN A {{ dns_ip }}
+api.{{ zone_name }}.         IN A {{ ubuntu_installer_ip }}
+api-int.{{ zone_name }}.     IN A {{ ubuntu_installer_ip }}
+*.apps.{{ zone_name }}.      IN A {{ ubuntu_installer_ip }}

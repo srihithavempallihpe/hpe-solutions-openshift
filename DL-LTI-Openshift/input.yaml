@@ -79,6 +79,8 @@ common:
    customerforwarderdns_fqdn: resolver.hpecorp.net
    solution_subnet_ip: 10.180.20.0/24
    ansible_engine_ip: 10.180.20.155
+   cluster_subdomain: ocp
+   gateway_ip: 10.180.20.2
 
 solution_network_ip: 10.180.20.2
 corporate_ntp: 16.110.135.123                         #Corporate NTP server IP address

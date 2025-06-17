@@ -1,0 +1,60 @@
+- name: Install required packages
+  apt:
+    name:
+      - bind9
+      - bind9utils
+      - bind9-doc
+      - dnsutils
+      - dnsmasq
+      - haproxy
+    state: present
+    update_cache: yes
+
+
+- name: Compute zone names
+  set_fact:
+    zone_name: "{{ cluster_subdomain }}.{{ common.base_domain }}"
+    reverse_zone: "{{ dns_forwarder.ip.split('.')[:3] | reverse | join('.') }}.in-addr.arpa"
+
+- name: Configure named.conf.options
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+
+- name: Configure named.conf.local
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+
+- name: Create forward zone
+  template:
+    src: forward.zone.j2
+    dest: "/etc/bind/forward.{{ zone_name }}"
+
+- name: Create reverse zone
+  template:
+    src: reverse.zone.j2
+    dest: "/etc/bind/reverse.{{ zone_name }}"
+
+- name: Validate BIND configuration
+  command: named-checkconf
+
+- name: Disable systemd-resolved
+  systemd:
+    name: systemd-resolved
+    enabled: no
+    state: stopped
+    masked: yes
+
+- name: Update resolv.conf
+  copy:
+    dest: /etc/resolv.conf
+    content: |
+      nameserver 127.0.0.1
+      nameserver {{ ubuntu_installer_ip }}
+
+- name: Enable and start named
+  systemd:
+    name: named
+    state: restarted
+    enabled: yes

@@ -14,5 +14,5 @@ ns      IN      A       {{ dns_ip }}
 {{ ocp_masters[0].ip.split('.')[3] }}  IN PTR master1.{{ zone_name }}.
 {{ ocp_masters[1].ip.split('.')[3] }}  IN PTR master2.{{ zone_name }}.
 {{ ocp_masters[2].ip.split('.')[3] }}  IN PTR master3.{{ zone_name }}.
-{{ dns_ip.split('.')[3] }}        IN PTR api.{{ zone_name }}.
-{{ dns_ip.split('.')[3] }}        IN PTR api-int.{{ zone_name }}.
+{{ ubuntu_installer_ip.split('.')[3] }}        IN PTR api.{{ zone_name }}.
+{{ ubuntu_installer_ip.split('.')[3] }}        IN PTR api-int.{{ zone_name }}.
