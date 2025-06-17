@@ -137,7 +137,7 @@ ocp_workers:
 dns_forwarder:
  - ip: 10.180.20.2       #customer upstream DNS
 
-ocp_version: 4.18.4                           #ex. 4.15.13
+ocp_version: 4.18.1                          #ex. 4.15.13
 
 cluster_name: OCP_VME
 
