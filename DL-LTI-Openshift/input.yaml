@@ -139,7 +139,7 @@ dns_forwarder:
 
 ocp_version: 4.18.1                          #ex. 4.15.13
 
-cluster_name: ocp_vme
+cluster_name: ocp
 
 sshKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+q7JG/hMt1e/LkJVT/Gphc3habmJW5aBTelstv1ZNTPI8O9LGzg1Rg5dMCID8W4+R9miSAkHNr6SiklVLIXS0nbBrx5U+xIl6PrIBne3DbouiWfTpOo6Ri6Ii7a/SXnjb7fCYEYHDSDfJCjDkx83uFAQuL1KP7jztDnUtOzVtFMieXWM1/Mj8khC1rpYSHYQpkFSRMpI8Wj52yyoDasueMUP2rsP2Odd8r/yodnHrO/8AckVwxRR8+eJ/v0SXMUUZIgP6fDrZfKScaIggcZjyf0cRS2O8FW7ulo5ePTqjGGwQGbGnvy2ftQGYbEuo8W8JORowSnDUa/rCwq4gNaUdGErl6chULM5Ejjj9XiIWLdItJ7gFO/KqYl5W2tmWOO+vdgCMNRoQtOES2ExosXhfQJttuZ2nBy4RRJO/qONGk31r+D/nYGWQ7FWfMMu6NB2LKjG9MdCP7d3cCE/TlbkBJ7E2FuJNxieaNogpHwY9YDbtxu5St71/qWfiPpu7EmU= root@installer.srihitha.local'
 
