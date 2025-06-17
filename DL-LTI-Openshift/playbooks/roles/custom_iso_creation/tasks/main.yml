@@ -65,7 +65,6 @@
         src: install-config.yaml.j2
         dest: "{{ install_dir }}/install-config.yaml"
         mode: "0644"
-        remote_src: yes
 
     - name: Copy install-config.yaml to /tmp
       copy:
