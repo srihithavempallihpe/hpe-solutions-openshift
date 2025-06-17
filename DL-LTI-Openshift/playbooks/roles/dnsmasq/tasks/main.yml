@@ -30,7 +30,7 @@
       dhcp-option=3,{{ servers[0].Host_Gateway }}
       dhcp-option=6,{{ ubuntu_installer_ip }}
       dhcp-range={{ dhcp_range }}
-      listen-address=::1,127.0.0.1,{{ master_binddns }}
+      listen-address=::1,127.0.0.1,{{ ubuntu_installer_ip }}
       dhcp-authoritative
   become: yes
 
