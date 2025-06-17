@@ -6,8 +6,8 @@ $TTL    604800
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 
-@       IN      NS      ns.{{ base_domain }}.
-ns      IN      A       {{ dns_ip }}
+@       IN      NS      ns.{{ common.base_domain }}.
+ns      IN      A       {{ ubuntu_installer_ip }}
 
 {{ dns_ip.split('.')[3] }}        IN PTR haproxy.{{ zone_name }}.
 {{ ocp_bootstrap[0].ip.split('.')[3] }} IN PTR bootstrap.{{ zone_name }}.
