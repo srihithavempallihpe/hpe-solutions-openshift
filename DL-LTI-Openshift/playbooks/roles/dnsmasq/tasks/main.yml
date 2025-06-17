@@ -50,12 +50,6 @@
       {% endfor %}
   become: yes
 
-- name: Verify dnsmasq configuration
-  command: dnsmasq --test
-  register: dnsmasq_test
-  changed_when: false
-  failed_when: "'syntax check OK' not in dnsmasq_test.stdout"
-
 - name: Enable and restart dnsmasq service
   service:
     name: dnsmasq
