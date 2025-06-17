@@ -1,8 +1,4 @@
 ---   
-#- name: disable selinux
-#  selinux:
-#    state: disabled
-
 - name: Install Haproxy package
   apt:
     name: haproxy
@@ -20,28 +16,6 @@
     owner: root
     group: root
     mode: 0644
-
-      
-- name: Install keepalived package
-  apt:
-   name:
-     - keepalived
-     - psmisc
-   state: present
-      
-- name: Dynamically copying Keepalived Configuration file
-  template:
-    src: ./keepalived.conf.j2
-    dest: /etc/keepalived/keepalived.conf
-    owner: root
-    group: root
-    mode: 0644
-
-#- name: Restart Keepalived Service
-#  service:
-#    name: keepalived
-#    state: started
-#    enabled: true
 
 - name: Restart HAProxy Service
   service:
