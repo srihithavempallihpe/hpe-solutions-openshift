@@ -103,7 +103,7 @@ ocp_bootstrap:
  - name: bootstrap
    ip: 10.180.20.181
    fqdn: bootstrap.ocp.isv.local                         #ex. bootstrap.ocp.isv.local
-   mac_address: a0:b1:b2:d1:e1:f5                #ex. 52:54:00:3e:f5:c1
+   mac_address: a0:b1:b2:d1:38:f5                #ex. 52:54:00:3e:f5:c1
 
 ocp_masters:
  - name: master1
