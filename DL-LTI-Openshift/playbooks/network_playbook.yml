@@ -1,7 +1,0 @@
-- hosts: {{ ubuntu_installer }}
-  gather_facts: false
-  become: yes
-  vars_files:
-    - input.yaml
-  roles:
-    - network_setup

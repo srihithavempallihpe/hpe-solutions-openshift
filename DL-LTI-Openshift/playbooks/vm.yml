@@ -1,6 +1,0 @@
-- name: Create Master and Bootstrap VMs
-  hosts: all
-  gather_facts: False
-  roles:
-    - roles/vms
-

@@ -1,4 +1,4 @@
-- name: Copy ssh key to rhel installer VM
+- name: Copy ssh key to ubuntu installer VM
   hosts: localhost
   gather_facts: False
   vars_files:
