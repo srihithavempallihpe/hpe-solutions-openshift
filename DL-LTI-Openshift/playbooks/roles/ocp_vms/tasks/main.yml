@@ -14,7 +14,7 @@
         --network network=Management,model=virtio,virtualport_type=openvswitch,mac={% for item in ocp_bootstrap %}{{ item.mac_address }}{% endfor %}
         --autostart 
         --console pty,target_type=virtio
-        --graphics=none 
+        --graphics spice,listen=127.0.0.1,autoport=yes,image.compression=off
         --noautoconsole 
         --wait 15
   delegate_to: "{{ groups['kvm_nodes'][0] }}" 
@@ -35,7 +35,7 @@
         --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[0].mac_address}}
         --autostart 
         --console pty,target_type=virtio
-        --graphics=none 
+        --graphics spice,listen=127.0.0.1,autoport=yes,image.compression=off
         --noautoconsole 
         --wait 15
   delegate_to: "{{ groups['kvm_nodes'][0] }}" 
@@ -56,7 +56,7 @@
         --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[1].mac_address}}
         --autostart 
         --console pty,target_type=virtio
-        --graphics=none 
+        --graphics spice,listen=127.0.0.1,autoport=yes,image.compression=off
         --noautoconsole 
         --wait 15
     become: true
@@ -78,7 +78,7 @@
         --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[2].mac_address}}
         --autostart 
         --console pty,target_type=virtio
-        --graphics=none 
+        --graphics spice,listen=127.0.0.1,autoport=yes,image.compression=off 
         --noautoconsole 
         --wait 15
     become: true
