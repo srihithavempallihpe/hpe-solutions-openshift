@@ -164,16 +164,3 @@
         - master
         - worker
 
-    - name: Copying iso files to vme nodes
-      copy:
-        src: "{{ install_dir }}/rhcos-{{ item }}.iso"
-        dest: "/var/morpheus/kvm/images/"
-        owner: root
-        group: root
-        mode: 775
-        decrypt: no
-      loop:
-        - bootstrap
-        - master
-        - worker
-
