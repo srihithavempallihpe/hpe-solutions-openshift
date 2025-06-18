@@ -102,35 +102,35 @@ squid_port:                                  #ex. 3128
 ocp_bootstrap:
  - name: bootstrap
    ip: 10.180.20.181
-   fqdn: rhocpbootstrap.vme.isv.local                         #ex. bootstrap.ocp.isv.local
+   fqdn: bootstrap.vme.isv.local                         #ex. bootstrap.ocp.isv.local
    mac_address: 52:54:00:34:c1:4e             #ex. 52:54:00:3e:f5:c1
 
 ocp_masters:
  - name: master1
    ip: 10.180.20.182
-   fqdn: rhocpmaster1.vme.isv.local                           #ex. master1.ocp.isv.local
+   fqdn: master1.vme.isv.local                           #ex. master1.ocp.isv.local
    mac_address: 52:54:00:34:c1:4c
  - name: master2
    ip: 10.180.20.183
-   fqdn: rhocpmaster2.vme.isv.local
+   fqdn: master2.vme.isv.local
    mac_address: 52:54:00:34:c1:4a
  - name: master3
    ip: 10.180.20.184
-   fqdn: rhocpmaster3.vme.isv.local
+   fqdn: master3.vme.isv.local
    mac_address: 52:54:00:34:c1:3e
 
 ocp_workers:
  - name: worker1
    ip: 10.180.20.185
-   fqdn: rhocpworker1.vme.isv.local                          #ex. mworker1.ocp.isv.local
+   fqdn: worker1.vme.isv.local                          #ex. mworker1.ocp.isv.local
    mac_address: 88:e9:a4:d2:bc:70         ### If user add core os worker to cluster then update mac address, if it rhel worker leave it empty
  - name: worker2
    ip: 10.180.20.186
-   fqdn: rhocpworker2.vme.isv.local
+   fqdn: rworker2.vme.isv.local
    mac_address: 88:e9:a4:d2:bc:5e
  - name: worker3
    ip: 10.180.20.187
-   fqdn: rhocpworker3.vme.isv.local
+   fqdn: worker3.vme.isv.local
    mac_address: 88:e9:a4:d2:ac:3e
 
 
