@@ -19,12 +19,6 @@
         --wait 15
   delegate_to: "{{ groups['kvm_nodes'][0] }}" 
 
-- name: Restart bootstrap Domain
-  shell: 
-    cmd: >-
-        virsh 
-        --connect qemu:///system start rhocpbootstrap
-  delegate_to: "{{ groups['kvm_nodes'][0] }}" 
 
 - name: Create master1 VM on KVM node1
   shell:
@@ -46,12 +40,6 @@
         --wait 15
   delegate_to: "{{ groups['kvm_nodes'][0] }}" 
 
-- name: Restart master1 Doamin
-  shell:
-    cmd: >-
-        virsh
-        --connect qemu:///system start rhocpmaster1
-  delegate_to: "{{ groups['kvm_nodes'][0] }}"
 
 - name: Create Master2 VM on KVM node2
   shell:
@@ -73,12 +61,6 @@
         --wait 15
   delegate_to: "{{ groups['kvm_nodes'][1] }}"
 
-- name: Restart master2 Doamin
-  shell:
-    cmd: >-
-        virsh
-        --connect qemu:///system start rhocpmaster2
-  delegate_to: "{{ groups['kvm_nodes'][1] }}"
 
 - name: Create Master3 VM on KVM node
   shell:
@@ -100,12 +82,6 @@
         --wait 15
   delegate_to: "{{ groups['kvm_nodes'][2] }}"
 
-- name: Restart master3 Domain
-  shell:
-    cmd: >-
-        virsh
-        --connect qemu:///system start rhocpmaster3
-  delegate_to: "{{ groups['kvm_nodes'][2] }}"
 
 
 
