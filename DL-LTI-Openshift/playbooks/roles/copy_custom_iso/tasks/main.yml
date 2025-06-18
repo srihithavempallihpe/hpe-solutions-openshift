@@ -1,16 +1,16 @@
 ---    
   - name: Copy ssh keys to VME Node1
     shell: "sshpass -p '{{ servers[0].Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no root@{{ servers[0].Host_IP }}"
-    delegate_to: infra_vm
+    delegate_to: "{{ groups['infra_vm'] }}"
 
   - name: Copy ssh keys to VME Node2
     shell: "sshpass -p '{{ servers[1].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[1].Host_IP }}"
-    delegate_to: infra_vm
+    delegate_to: "{{ groups['infra_vm'] }}"
 
   - name: Copy ssh keys to VME Node3
     shell: "sshpass -p '{{ servers[2].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[2].Host_IP }}"
-    delegate_to: infra_vm
-    
+    delegate_to: "{{ groups['infra_vm'] }}"
+
   - name: Copy ISO from infra VM to VME node
     ansible.builtin.copy:
       src: "{{ install_dir }}/rhcos-{{ item }}.iso"
@@ -18,7 +18,7 @@
       owner: root
       group: root
       mode: '0775'
-    delegate_to: infra_vm
+    delegate_to: "{{ groups['infra_vm'] }}"
     loop:
       - bootstrap
       - master
