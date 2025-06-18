@@ -32,7 +32,7 @@
         --os-type linux
         --cdrom /var/morpheus/kvm/images/rhcos-master.iso
         --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
-        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_master[0].mac_address}}
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[0].mac_address}}
         --autostart 
         --console pty,target_type=virtio
         --graphics=none 
@@ -53,7 +53,7 @@
         --os-type linux
         --cdrom /var/morpheus/kvm/images/rhcos-master.iso
         --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
-        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_master[1].mac_address}}
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[1].mac_address}}
         --autostart 
         --console pty,target_type=virtio
         --graphics=none 
@@ -74,7 +74,7 @@
         --os-type linux
         ---cdrom /var/morpheus/kvm/images/rhcos-master.iso
         --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
-        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_master[2].mac_address}}
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[2].mac_address}}
         --autostart 
         --console pty,target_type=virtio
         --graphics=none 
