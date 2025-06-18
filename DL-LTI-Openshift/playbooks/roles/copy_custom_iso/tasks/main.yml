@@ -1,12 +1,7 @@
 ---    
-  - name: Copy ISO from infra VM to VME nodes
-    ansible.builtin.copy:
-      src: "{{ install_dir }}/rhcos-{{ item }}.iso"
-      dest: "/var/morpheus/kvm/images/"
-      owner: root
-      group: root
-      mode: '0775'
-      remote_src: yes
+  - name: Copy ISO to KVM node from infra_vm
+    ansible.builtin.shell: |
+      scp -o StrictHostKeyChecking=no {{ install_dir }}/rhcos-{{ item }}.iso root@{{ inventory_hostname }}:/var/morpheus/kvm/images/
     delegate_to: "{{ groups['infra_vm'][0] }}"
     loop:
       - bootstrap

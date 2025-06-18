@@ -3,19 +3,20 @@
   shell:
     cmd: >-
         virt-install
-        -n bootstrap
+        -n rhocpbootstrap
         --description "Bootstrap Machine for Openshift 4 Cluster"
         --memory {{ vm_mem }}
         --vcpus={{ vm_cpu }}
         --os-variant=rhel9.0
         --os-type linux
-        --noreboot
-        --disk pool=ocp_vms,bus=virtio,size={{ vm_size }}
-        --serial pty
-        --console pty
-        --pxe
-        --network bridge:{{ common.interface_name }},mac.address={% for item in ocp_bootstrap %}{{ item.mac_address }}{% endfor %}
-        --wait 10
+        --cdrom /var/morpheus/kvm/images/rhcos-bootstrap.iso
+        --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={% for item in ocp_bootstrap %}{{ item.mac_address }}{% endfor %}
+        --autostart 
+        --console pty,target_type=virtio
+        --graphics=none 
+        --noautoconsole 
+        --wait 15
   delegate_to: "{{ groups['kvm_nodes'][0] }}" 
 
 - name: Restart bootstrap Doamin
