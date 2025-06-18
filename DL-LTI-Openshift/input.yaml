@@ -103,21 +103,21 @@ ocp_bootstrap:
  - name: bootstrap
    ip: 10.180.20.181
    fqdn: bootstrap.ocp.isv.local                         #ex. bootstrap.ocp.isv.local
-   mac_address: a0:b1:b2:d1:38:f5                #ex. 52:54:00:3e:f5:c1
+   mac_address: 52:54:00:34:c1:4e             #ex. 52:54:00:3e:f5:c1
 
 ocp_masters:
  - name: master1
    ip: 10.180.20.182
    fqdn: master1.ocp.isv.local                           #ex. master1.ocp.isv.local
-   mac_address: a0:b1:b2:d1:e1:f6
+   mac_address: 52:54:00:34:c1:4c
  - name: master2
    ip: 10.180.20.183
    fqdn: master2.ocp.isv.local
-   mac_address: a0:b1:b2:d1:e1:f7
+   mac_address: 52:54:00:34:c1:4a
  - name: master3
    ip: 10.180.20.184
    fqdn: master3.ocp.isv.local
-   mac_address: a0:b1:b2:d1:e1:f8
+   mac_address: 52:54:00:34:c1:3e
 
 ocp_workers:
  - name: worker1
@@ -195,4 +195,4 @@ ubuntu_installer_password: Password!234
 ubuntu_installer_host_prefix: 24
 ubuntu_installer_host_gateway: 10.180.20.2
 ubuntu_installer_host_nameserver: 10.180.20.2
-ubuntu_installer_mac: "52:54:00:12:34:42"
+ubuntu_installer_mac: "52:54:00:12:34:42" 
