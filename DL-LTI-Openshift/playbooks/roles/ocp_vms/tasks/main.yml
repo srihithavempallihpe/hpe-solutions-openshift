@@ -59,6 +59,7 @@
         --graphics=none 
         --noautoconsole 
         --wait 15
+    become: true
   delegate_to: "{{ groups['kvm_nodes'][1] }}"
 
 
@@ -80,6 +81,7 @@
         --graphics=none 
         --noautoconsole 
         --wait 15
+    become: true
   delegate_to: "{{ groups['kvm_nodes'][2] }}"
 
 
