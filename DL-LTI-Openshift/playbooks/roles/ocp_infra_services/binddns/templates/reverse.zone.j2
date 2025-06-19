@@ -1,0 +1,23 @@
+$TTL    604800
+@       IN      SOA     {{ common.base_domain }}. root.{{ common.base_domain }}. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+@       IN      NS      ns.{{ common.base_domain }}.
+ns      IN      A       {{ ubuntu_installer_ip }}
+
+{% for item in ocp_bootstrap %}
+{{ item.ip.split('.')[::-1][:1] | join('.') }}         IN         PTR        {{ item.fqdn }}.
+{% endfor %}
+{% for item in ocp_masters %}
+{{ item.ip.split('.')[::-1][:1] | join('.') }}         IN         PTR        {{ item.fqdn }}.
+{% endfor %}
+{% for item in ocp_workers %}
+{{ item.ip.split('.')[::-1][:1] | join('.') }}         IN         PTR        {{ item.fqdn }}.
+{% endfor %}
+{{ VIP.split('.')[::-1][:1] | join('.') }}         IN         PTR        {{ haproxy_fqdn }}.
+{{ VIP.split('.')[::-1][:1] | join('.') }}         IN         PTR        api.{{ common.app_domain }}. 
+{{ VIP.split('.')[::-1][:1] | join('.') }}         IN         PTR        api-int.{{ common.app_domain }}. 

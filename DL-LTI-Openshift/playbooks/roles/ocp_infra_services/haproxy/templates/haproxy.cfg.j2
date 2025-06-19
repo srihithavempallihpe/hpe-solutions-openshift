@@ -132,6 +132,9 @@ frontend ingress-http
 backend ingress-http
     balance source
     mode tcp
+    {% for item in ocp_workers %}
+    server ocpworker{{ loop.index }} {{ item.fqdn }}:80 check
+    {% endfor %}
     {% for item in ocp_masters %}
     server ocpmaster{{ loop.index }} {{ item.fqdn }}:80 check
     {% endfor %}
@@ -146,6 +149,9 @@ frontend ingress-https
 backend ingress-https
     balance source
     mode tcp
+    {% for item in ocp_workers %}
+    server ocpworker{{ loop.index }} {{ item.fqdn }}:443 check
+    {% endfor %}
     {% for item in ocp_masters %}
     server ocpmaster{{ loop.index }} {{ item.fqdn }}:443 check
     {% endfor %}
