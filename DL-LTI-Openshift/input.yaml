@@ -126,7 +126,7 @@ ocp_workers:
    mac_address: 88:e9:a4:d2:bc:70         ### If user add core os worker to cluster then update mac address, if it rhel worker leave it empty
  - name: worker2
    ip: 10.180.20.186
-   fqdn: rworker2.ocp.ocp.local
+   fqdn: worker2.ocp.ocp.local
    mac_address: 88:e9:a4:d2:bc:5e
  - name: worker3
    ip: 10.180.20.187
