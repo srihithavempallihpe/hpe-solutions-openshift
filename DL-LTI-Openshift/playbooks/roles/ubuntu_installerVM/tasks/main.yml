@@ -155,11 +155,21 @@
     state: absent
   delegate_to: "{{ groups['vme_nodes'][0] }}" 
 
-- name: Delete custom ubuntu iso directory
-  file:
-    path: /tmp/ubuntu_installer*
-    state: absent
+- name: Find directories matching ubuntu_installer*
+  find:
+    paths: /tmp
+    patterns: 'ubuntu_installer*'
+    file_type: directory
+  register: matched_dirs
   delegate_to: localhost
+
+- name: Delete matched directories
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ matched_dirs.files }}"
+  delegate_to: localhost
+
 
 
 
