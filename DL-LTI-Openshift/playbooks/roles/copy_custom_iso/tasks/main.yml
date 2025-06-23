@@ -1,15 +1,15 @@
 ---  
-  - name: Copy ssh keys to vme nodes
-    shell: "sshpass -p '{{ servers[0].Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no root@{{ servers[0].Host_VlanIP1 }}"
-    become_user: root
+  # - name: Copy ssh keys to vme nodes
+  #   shell: "sshpass -p '{{ servers[0].Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no root@{{ servers[0].Host_VlanIP1 }}"
+  #   become_user: root
 
-  - name: Copy ssh keys to vme nodes
-    shell: "sshpass -p '{{ servers[1].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[1].Host_VlanIP1 }}"
-    become_user: root
+  # - name: Copy ssh keys to vme nodes
+  #   shell: "sshpass -p '{{ servers[1].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[1].Host_VlanIP1 }}"
+  #   become_user: root
   
-  - name: Copy ssh keys to vme nodes
-    shell: "sshpass -p '{{ servers[2].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[2].Host_VlanIP1 }}"
-    become_user: root
+  # - name: Copy ssh keys to vme nodes
+  #   shell: "sshpass -p '{{ servers[2].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[2].Host_VlanIP1 }}"
+  #   become_user: root
 
   - name: Copy ISO to KVM node from infra_vm
     ansible.builtin.shell: |
