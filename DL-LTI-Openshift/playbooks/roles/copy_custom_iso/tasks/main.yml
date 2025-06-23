@@ -1,4 +1,13 @@
----    
+---  
+  - name: Copy ssh keys to vme nodes
+    shell: "sshpass -p '{{ servers[0].Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no root@{{ servers[0].Host_IP }}"
+
+  - name: Copy ssh keys to vme nodes
+    shell: "sshpass -p '{{ servers[1].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[1].Host_IP }}"
+  
+  - name: Copy ssh keys to vme nodes
+    shell: "sshpass -p '{{ servers[2].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[2].Host_IP }}"
+
   - name: Copy ISO to KVM node from infra_vm
     ansible.builtin.shell: |
       scp -o StrictHostKeyChecking=no {{ install_dir }}/rhcos-{{ item }}.iso root@{{ inventory_hostname }}:/var/morpheus/kvm/images/
