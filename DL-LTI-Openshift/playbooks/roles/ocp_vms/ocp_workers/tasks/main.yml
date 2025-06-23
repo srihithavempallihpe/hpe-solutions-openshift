@@ -1,0 +1,67 @@
+---
+
+- name: Create worker1 VM on vme node1
+  shell:
+    cmd: >-
+        virt-install
+        -n rhocpworker11
+        --description "worker1 Machine for Openshift 4 Cluster"
+        --memory {{ vm_mem }}
+        --vcpus={{ vm_cpu }}  
+        --os-variant=rhel9.0
+        --os-type linux
+        --cdrom /var/morpheus/kvm/images/rhcos-worker.iso
+        --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_workers[0].mac_address}}
+        --autostart 
+        --console pty,target_type=virtio
+        --graphics spice
+        --noautoconsole 
+        --wait 15
+  delegate_to: "{{ groups['vme_nodes'][0] }}" 
+
+
+- name: Create worker2 VM on vme node2
+  shell:
+    cmd: >-
+        virt-install
+        -n rhocpworker12
+        --description "worker2 Machine for Openshift 4 Cluster"
+        --memory {{ vm_mem }}
+        --vcpus={{ vm_cpu }}
+        --os-variant=rhel9.0
+        --os-type linux
+        --cdrom /var/morpheus/kvm/images/rhcos-worker.iso
+        --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_workers[1].mac_address}}
+        --autostart 
+        --console pty,target_type=virtio
+        --graphics spice
+        --noautoconsole 
+        --wait 15
+  delegate_to: "{{ groups['vme_nodes'][1] }}"
+
+
+- name: Create worker3 VM on vme node
+  shell:
+    cmd: >-
+        virt-install
+        -n  rhocpworker13
+        --description "worker3 Machine for Openshift 4 Cluster"
+        --memory {{ vm_mem }}
+        --vcpus={{ vm_cpu }}
+        --os-variant=rhel9.0
+        --os-type linux
+        ---cdrom /var/morpheus/kvm/images/rhcos-worker.iso
+        --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_workers[2].mac_address}}
+        --autostart 
+        --console pty,target_type=virtio
+        --graphics spice
+        --noautoconsole 
+        --wait 15
+  delegate_to: "{{ groups['vme_nodes'][2] }}"
+
+
+
+
