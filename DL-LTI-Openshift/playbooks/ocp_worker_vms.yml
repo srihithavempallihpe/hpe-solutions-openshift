@@ -1,0 +1,9 @@
+- name: Create Worker VMs
+  become: yes
+  hosts: localhost
+  vars_files:
+    - ../input.yaml
+  gather_facts: False
+  remote_user: root
+  roles:
+    - { role: roles/ocp_vms/ocpworkers }
