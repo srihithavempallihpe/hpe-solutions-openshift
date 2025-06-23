@@ -32,13 +32,13 @@
      ignore_errors: true
 
    - name: Copy ssh keys to head nodes
-     shell: "sshpass -p '{{ servers[0].Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no root@{{ servers[0].Host_IP }}"
+     shell: "sshpass -p '{{ servers[0].Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no root@{{ servers[0].Host_VlanIP1 }}"
   
    - name: Copy ssh keys to head nodes
-     shell: "sshpass -p '{{ servers[1].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[1].Host_IP }}"
+     shell: "sshpass -p '{{ servers[1].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[1].Host_VlanIP1 }}"
    
    - name: Copy ssh keys to head nodes
-     shell: "sshpass -p '{{ servers[2].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[2].Host_IP }}"
+     shell: "sshpass -p '{{ servers[2].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[2].Host_VlanIP1 }}"
   
      
 
