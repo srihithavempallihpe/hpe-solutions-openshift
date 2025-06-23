@@ -34,7 +34,13 @@ autoinstall:
   late-commands:
     - echo "root:{{ ubuntu_installer_password }}" | chpasswd
     - passwd -u root
-    - sed -i 's/^#\?PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config
-    - sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
-    - systemctl restart ssh
+    - sed -i '/^PermitRootLogin/d' /etc/ssh/sshd_config
+    - echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+    - sed -i '/^PasswordAuthentication/d' /etc/ssh/sshd_config
+    - echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
+    - systemctl restart ssh || systemctl restart sshd || true
+    - systemctl status ssh > /root/ssh_status.log 2>&1 || true
+    - passwd -S root > /root/root_passwd_status.log
     - echo "Installation completed" > /root/install.log
+ 
+    
