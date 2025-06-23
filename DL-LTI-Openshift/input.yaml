@@ -127,7 +127,7 @@ ocp_workers:
  - name: worker1
    ip: 10.180.20.185
    fqdn: worker1.ocp.vme.local                          #ex. mworker1.ocp.isv.local
-   mac_address: 88:e9:a4:f2:bc:3c         ### If user add core os worker to cluster then update mac address, if it rhel worker leave it empty
+   mac_address: 88:e9:a4:f2:bc:3c       ### If user add core os worker to cluster then update mac address, if it rhel worker leave it empty
  - name: worker2
    ip: 10.180.20.186
    fqdn: worker2.ocp.vme.local

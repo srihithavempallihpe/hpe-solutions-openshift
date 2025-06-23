@@ -1,5 +1,3 @@
----
-
 - name: Create worker1 VM on vme node1
   shell:
     cmd: >-
@@ -21,12 +19,12 @@
   delegate_to: "{{ groups['vme_nodes'][0] }}" 
 
 
-- name: Create worker2 VM on vme node2
+- name: Create Worker2 VM on vme node2
   shell:
     cmd: >-
         virt-install
         -n rhocpworker12
-        --description "worker2 Machine for Openshift 4 Cluster"
+        --description "Worker2 Machine for Openshift 4 Cluster"
         --memory {{ vm_mem }}
         --vcpus={{ vm_cpu }}
         --os-variant=rhel9.0
@@ -42,12 +40,12 @@
   delegate_to: "{{ groups['vme_nodes'][1] }}"
 
 
-- name: Create worker3 VM on vme node
+- name: Create Worker3 VM on vme node
   shell:
     cmd: >-
         virt-install
-        -n  rhocpworker13
-        --description "worker3 Machine for Openshift 4 Cluster"
+        -n  rhocpworkerr13
+        --description "Worker3 Machine for Openshift 4 Cluster"
         --memory {{ vm_mem }}
         --vcpus={{ vm_cpu }}
         --os-variant=rhel9.0

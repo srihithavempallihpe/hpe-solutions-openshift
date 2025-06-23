@@ -7,7 +7,7 @@
   roles:
     - { role: roles/ocp_infra_services/binddns }
 
-- name: Deploy dnsmasq service
+- name: Deploy haproxy service
   hosts: infra_vm
   become: true
   gather_facts: False

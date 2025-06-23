@@ -23,20 +23,6 @@
     state: started
     enabled: true
 
-- name: Ensure firewalld and Python bindings are installed
-  apt:
-    name:
-      - firewalld
-      - python3-firewall
-    state: present
-    update_cache: yes
-
-- name: Ensure firewalld is running
-  systemd:
-    name: firewalld
-    state: started
-    enabled: yes
-
 - name: Allow HTTPS to the firewall
   firewalld:
     service: https

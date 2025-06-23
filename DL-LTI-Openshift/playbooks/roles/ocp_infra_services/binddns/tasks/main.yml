@@ -58,3 +58,30 @@
     name: named
     state: restarted
     enabled: yes
+
+- name: Ensure firewalld and Python bindings are installed
+  apt:
+    name:
+      - firewalld
+      - python3-firewall
+    state: present
+    update_cache: yes
+
+- name: Ensure firewalld is running
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Reload firewall service
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: Permit TCP ports and services in firewall rule
+  shell: |
+       sudo firewall-cmd --add-port=53/udp --permanent
+       sudo firewall-cmd --add-port=53/tcp --permanent
+       firewall-cmd --reload
+  become: true
+
