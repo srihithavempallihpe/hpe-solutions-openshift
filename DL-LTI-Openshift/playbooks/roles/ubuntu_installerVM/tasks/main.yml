@@ -127,10 +127,10 @@
   shell: >
     virt-install
     --name ubuntuinstaller
-    --memory 16000
-    --vcpus 4
+    --memory {{ vm_mem }}
+    --vcpus {{ vm_cpu }}
     --cpu host
-    --disk pool=mvm-volumes,size=250
+    --disk pool=mvm-volumes,size={{ vm_size }}
     --os-variant ubuntu24.04
     --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ ubuntu_installer_mac }}
     --noautoconsole
@@ -139,6 +139,7 @@
     --boot cdrom,hd
     --autostart
     --cdrom /tmp/ubuntu_installer_custom_iso.iso
+    --wait 15
   delegate_to: "{{ groups['vme_nodes'][0] }}" 
 
 - name: ping the VM to check it's reachable
@@ -147,3 +148,5 @@
     host: "{{ ubuntu_installer_ip }}"
     search_regex: OpenSSH
     delay: 10
+
+
