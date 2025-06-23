@@ -3,11 +3,12 @@ autoinstall:
   version: 1
   identity:
     hostname: {{ ubuntu_installer_hostname }}
-    username: root
+    username: {{ ubuntu_installer_username }}
     password: {{ ubuntu_installer_password_hashed }}  # hashed password (e.g., mkpasswd -m sha-512)
   keyboard:
     layout: us
   locale: en_US
+  reboot: true
   network:
     version: 2
     ethernets:
