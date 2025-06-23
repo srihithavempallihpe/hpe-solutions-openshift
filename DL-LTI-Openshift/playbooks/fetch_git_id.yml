@@ -1,5 +1,6 @@
 - name: Find Morpheus Git repo folder by remote URL
   hosts: localhost
+  become: yes
   gather_facts: false
   vars:
     target_git_url: "https://github.com/srihithavempallihpe/hpe-solutions-openshift.git"

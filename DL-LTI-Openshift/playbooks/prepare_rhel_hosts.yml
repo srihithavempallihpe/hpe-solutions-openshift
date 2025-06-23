@@ -1,6 +1,6 @@
 ---
 - name: prepare hosts
-  hosts: kvm_nodes
+  hosts: vme_nodes
   gather_facts: false
   vars_files:
     - ../input.yaml

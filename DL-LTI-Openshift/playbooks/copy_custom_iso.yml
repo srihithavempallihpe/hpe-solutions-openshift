@@ -1,6 +1,6 @@
 ---
 - name: Copy custom iso to VME nodes
-  hosts: kvm_nodes
+  hosts: vme_nodes
   become: yes
   gather_facts: no
   remote_user: root

@@ -1,0 +1,44 @@
+cluster:
+  group:
+    id: "{{ group_id }}"
+  cloud:
+    id: "{{ cloud_id }}"
+  layout:
+    id: "{{ layout_id }}"
+  autoRecoverPowerState: false
+  type: "{{ cluster_type }}"
+  name: "{{ cluster_name }}"
+  server:
+    config:
+      defaultRepoAccount: "None"
+    plan:
+      id: 2
+      code: "{{ 'manual-default' if cluster_layout == 'ceph' else 'default-manual' }}"
+    visibility: public
+    {% if cluster_layout == 'ceph' %}
+    dataDevice: "{{ data_device }}"
+    cpuArch: x86_64
+    cpuModel: host-passthrough
+    network:
+      name: "bond0.{{ servers[0].Host_VlanID1 }}"
+      computeInterfaceName: "bond0.{{ servers[0].Host_VlanID2 }}"
+    sshHosts:
+      {% for host in servers %}
+      - ip: "{{ host.Host_VlanIP1 }}"
+        name: "{{ host.Hostname }}"
+      {% endfor %}
+    sshPort: 22
+    sshUsername: "{{ servers[0].Host_Username }}"
+    sshPassword: "{{ servers[0].Host_Password }}"
+    {% else %}
+    name: "{{ servers[0].Hostname }}"
+    network:
+      name: "bond0.{{ servers[0].Host_VlanID1 }}"
+      computeInterfaceName: "bond0.{{ servers[0].Host_VlanID2 }}"
+    sshHosts:
+      - ip: "{{ servers[0].Host_VlanIP1 }}"
+        name: "{{ servers[0].Hostname }}"
+    sshPort: 22
+    sshUsername: "{{ servers[0].Host_Username }}"
+    sshPassword: "{{ servers[0].Host_Password }}"
+    {% endif %}

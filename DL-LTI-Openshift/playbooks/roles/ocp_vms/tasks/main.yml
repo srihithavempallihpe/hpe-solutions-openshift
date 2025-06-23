@@ -1,5 +1,5 @@
 ---
-- name: Create bootstrap VM on KVM node1
+- name: Create bootstrap VM on vme node1
   shell:
     cmd: >-
         virt-install
@@ -17,10 +17,10 @@
         --graphics spice
         --noautoconsole 
         --wait 15
-  delegate_to: "{{ groups['kvm_nodes'][0] }}" 
+  delegate_to: "{{ groups['vme_nodes'][0] }}" 
 
 
-- name: Create master1 VM on KVM node1
+- name: Create master1 VM on vme node1
   shell:
     cmd: >-
         virt-install
@@ -38,10 +38,10 @@
         --graphics spice
         --noautoconsole 
         --wait 15
-  delegate_to: "{{ groups['kvm_nodes'][0] }}" 
+  delegate_to: "{{ groups['vme_nodes'][0] }}" 
 
 
-- name: Create Master2 VM on KVM node2
+- name: Create Master2 VM on vme node2
   shell:
     cmd: >-
         virt-install
@@ -59,10 +59,10 @@
         --graphics spice
         --noautoconsole 
         --wait 15
-  delegate_to: "{{ groups['kvm_nodes'][1] }}"
+  delegate_to: "{{ groups['vme_nodes'][1] }}"
 
 
-- name: Create Master3 VM on KVM node
+- name: Create Master3 VM on vme node
   shell:
     cmd: >-
         virt-install
@@ -80,7 +80,7 @@
         --graphics spice
         --noautoconsole 
         --wait 15
-  delegate_to: "{{ groups['kvm_nodes'][2] }}"
+  delegate_to: "{{ groups['vme_nodes'][2] }}"
 
 
 

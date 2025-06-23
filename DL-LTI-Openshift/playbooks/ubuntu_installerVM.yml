@@ -1,7 +1,7 @@
 ---
 - name: Create Ubuntu Installer VM 
   become: true
-  hosts: "{{ groups['kvm_nodes'][0] }}"
+  hosts: "{{ groups['vme_nodes'][0] }}"
   remote_user: root
   gather_facts: false
   vars_files:

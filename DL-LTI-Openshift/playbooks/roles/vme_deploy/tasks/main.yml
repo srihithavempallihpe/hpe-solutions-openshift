@@ -1,0 +1,148 @@
+---
+- name: Get access token
+  uri:
+    url: "https://{{ vmemanager.hostname }}/oauth/token?client_id=morph-api&grant_type=password&scope=write"
+    method: POST
+    headers:
+      accept: application/json
+      content-type: application/x-www-form-urlencoded
+    body_format: form-urlencoded
+    body:
+      username: "{{ vmemanager.username }}"
+      password: "{{ vmemanager.password }}"
+    validate_certs: no
+  register: token_response
+  failed_when: token_response.status != 200
+
+- name: Set access token
+  set_fact:
+    access_token: "{{ token_response.json.access_token }}"
+
+- name: Get existing groups
+  uri:
+    url: "https://{{ vmemanager.hostname }}/api/groups"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: application/json
+      Accept: application/json
+    validate_certs: no
+  register: group_list
+
+- name: Set group_id (create if not exists)
+  set_fact:
+    group_id: >-
+      {{ (group_list.json.groups | selectattr('name', 'equalto', group_name) | list | first).id
+         if (group_list.json.groups | selectattr('name', 'equalto', group_name) | list | length > 0)
+         else omit }}
+
+- name: Create group if not found
+  uri:
+    url: "https://{{ vmemanager.hostname }}/api/groups"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: application/json
+      Accept: application/json
+    body:
+      group:
+        name: "{{ group_name }}"
+    body_format: json
+    validate_certs: no
+  when: group_id is not defined
+  register: group_create
+
+- name: Set group_id after creation
+  set_fact:
+    group_id: "{{ group_create.json.group.id }}"
+  when: group_id is not defined
+
+- name: Get existing zones
+  uri:
+    url: "https://{{ vmemanager.hostname }}/api/zones"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: application/json
+      Accept: application/json
+    validate_certs: no
+  register: zone_list
+
+- name: Set cloud_id (create if not exists)
+  set_fact:
+    cloud_id: >-
+      {{ (zone_list.json.zones | selectattr('name', 'equalto', cloud_name) | list | first).id
+         if (zone_list.json.zones | selectattr('name', 'equalto', cloud_name) | list | length > 0)
+         else omit }}
+
+- name: Create cloud if not found
+  uri:
+    url: "https://{{ vmemanager.hostname }}/api/zones"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: application/json
+      Accept: application/json
+    body:
+      zone:
+        name: "{{ cloud_name }}"
+        visibility: "private"
+        zoneType:
+          code: "standard"
+        enabled: true
+        autoRecoverPowerState: false
+        scalePriority: 1
+        securityMode: "off"
+        credential:
+          type: "local"
+        groupId: "{{ group_id }}"
+    body_format: json
+    validate_certs: no
+  when: cloud_id is not defined
+  register: cloud_create
+
+- name: Set cloud_id after creation
+  set_fact:
+    cloud_id: "{{ cloud_create.json.zone.id }}"
+  when: cloud_id is not defined
+
+- name: Get layout ID
+  uri:
+    url: "https://{{ vmemanager.hostname }}/api/library/cluster-layouts"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Accept: application/json
+    validate_certs: no
+  register: layout_result
+
+- name: Set layout_id
+  set_fact:
+    layout_id: >-
+      {{ (layout_result.json.layouts | selectattr('name', 'search', layout_pattern) | list | first).id }}
+  vars:
+    layout_pattern: >-
+      {{ 'Ceph Cluster on Existing Ubuntu ' + ubuntu_version
+         if cluster_layout == 'ceph'
+         else 'Cluster on Existing Ubuntu ' + ubuntu_version }}
+
+- name: Prepare cluster payload
+  set_fact:
+    cluster_payload: "{{ lookup('template', 'cluster_payload.json.j2') | from_yaml }}"
+
+- name: Create cluster
+  uri:
+    url: "https://{{ vmemanager.hostname }}/api/clusters"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: application/json
+      Accept: application/json
+    body: "{{ cluster_payload }}"
+    body_format: json
+    validate_certs: no
+  register: cluster_response
+
+- name: Print cluster creation result
+  debug:
+    var: cluster_response.json

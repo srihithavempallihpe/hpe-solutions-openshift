@@ -139,7 +139,7 @@
     --boot cdrom,hd
     --autostart
     --cdrom /tmp/ubuntu_installer_custom_iso.iso
-  delegate_to: "{{ groups['kvm_nodes'][0] }}" 
+  delegate_to: "{{ groups['vme_nodes'][0] }}" 
 
 - name: ping the VM to check it's reachable
   wait_for:

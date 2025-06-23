@@ -3,19 +3,22 @@ servers:
    ILO_Address: 172.28.1.20
    ILO_Username: admin
    ILO_Password: Password!234
-   Hostname: rvme1.isv.local               #ex. headnode1.isv.local
+   Hostname: ocp_host1.vme.local               #ex. headnode1.isv.local
+   Hostdomain: vme.local
    Host_Username: root
    Host_Password: Password!234
-   HWADDR1: 94:40:c9:a7:de:d4            #mac address for server physical interface1
-   HWADDR2: 94:40:c9:a7:de:d5             #mac address for server physical interface2
+   HWMACADDR1: 94:40:c9:a7:de:d4            #mac address for server physical interface1
+   HWMACADDR2: 94:40:c9:a7:de:d5             #mac address for server physical interface2
    Host_OS_disk: sda
-   Host_VlanID:                          #solution VLAN ID ex. 230
-   Host_IP: 10.180.20.151
+   Host_VlanID1:                          #solution VLAN ID ex. 230
+   Host_VlanIP1: 10.180.20.151
+   Host_Vlan1prefix: 24
    Host_Netmask: 255.255.255.0
-   Host_Prefix: 24                          #ex. 8,24,32
-   Host_Gateway: 10.180.20.2
+   Host_Vlan1Gateway: 10.180.20.2                       #ex. 8,24,32
    Host_DNS: 10.180.20.2
-   Host_Domain: isv.local                       #ex. isv.local
+   Host_VlanID2: 
+   Host_VlanIP2: 
+   Host_Vlan2prefix: 24                      
    corporate_proxy:               #provide corporate proxy, ex. proxy.houston.company.net
    corporate_proxy_port:                 #corporate proxy port no, ex. 8080
 
@@ -23,19 +26,22 @@ servers:
    ILO_Address: 172.28.0.12
    ILO_Username: admin
    ILO_Password: Password!234
-   Hostname: rvme2.isv.local                #ex. headnode2.isv.local
+   Hostname: ocp_host2.vme.local               #ex. headnode2.isv.local
+   Hostdomain: vme.local
    Host_Username: root
    Host_Password: Password!234
    HWADDR1: 88:e9:a4:cb:32:3c             #mac address for server physical interface1
    HWADDR2: 88:e9:a4:cb:32:3d             #mac address for server physical interface2
    Host_OS_disk: sda
-   Host_VlanID:
-   Host_IP: 10.180.20.152
+   Host_VlanID1:                          #solution VLAN ID ex. 230
+   Host_VlanIP1: 10.180.20.152
+   Host_Vlan1prefix: 24
    Host_Netmask: 255.255.255.0
-   Host_Prefix: 24                          #ex. 8,24,32
-   Host_Gateway: 10.180.20.2
+   Host_Vlan1Gateway: 10.180.20.2                       #ex. 8,24,32
    Host_DNS: 10.180.20.2
-   Host_Domain: isv.local                       #ex. isv.local
+   Host_VlanID2: 216
+   Host_VlanIP2: 
+   Host_Vlan2prefix: 24                      
    corporate_proxy:               #provide corporate proxy, ex. proxy.houston.hpecorp.net
    corporate_proxy_port:                 #corporate proxy port no, ex. 8080
 
@@ -43,19 +49,22 @@ servers:
    ILO_Address: 172.28.0.13
    ILO_Username: admin
    ILO_Password: Password!234
-   Hostname: rvme2.isv.local                 #ex. headnode3.isv.local
+   Hostname: ocp_host3.vme.local                 #ex. headnode3.isv.local
+   Hostdomain: vme.local
    Host_Username: root
    Host_Password: Password!234
    HWADDR1: 88:e9:a4:cb:32:f4             #mac address for server physical interface1
    HWADDR2: 88:e9:a4:cb:32:f5             #mac address for server physical interface2
    Host_OS_disk: sda
-   Host_VlanID:
-   Host_IP: 10.180.20.153
+   Host_VlanID1:                          #solution VLAN ID ex. 230
+   Host_VlanIP1: 10.180.20.153
+   Host_Vlan1prefix: 24
    Host_Netmask: 255.255.255.0
-   Host_Prefix: 24                          #ex. 8,24,32
-   Host_Gateway: 10.180.0.2
-   Host_DNS: 10.180.0.2
-   Host_Domain: isv.local                       #ex. isv.local
+   Host_Vlan1Gateway: 10.180.20.2                       #ex. 8,24,32
+   Host_DNS: 10.180.20.2
+   Host_VlanID2: 
+   Host_VlanIP2: 
+   Host_Vlan2prefix: 24  
    corporate_proxy:               #provide corporate proxy, ex. proxy.houston.hpecorp.net
    corporate_proxy_port:                #corporate proxy port no, ex. 8080
 
@@ -64,18 +73,13 @@ config:
    HTTP_file_path: /usr/share/nginx/html/
    OS_type: ubuntu
    OS_image_name: ubuntu-24.04.2-live-server-amd64.iso    # ISO image should be present in /usr/share/nginx/html/
-   base_kickstart_filepath: /opt/hpe-solutions-openshift/DL-LTI-Openshift/playbooks/roles/rhel9_os_deployment/tasks/ks_rhel9.cfg
-
-rhsub_username: eaj@hpe.com
-rhsub_password: Password!234
-pool_id: 2c94760e887329bc018890fcda3c5143                         #Pool ID for Redhat OpenShift Container Platform and Openshift Infrastructure
 
 common:
    ifcfg_filename: ifcfg-bridge0                #network-scripts OS network filename with static IP, ifcfg-bridge0.230        
    interface_name: bridge0                      #ex. bridge0.230
-   base_domain: ocp.local                             #ex. isv.local
+   base_domain: vme.local                             #ex. isv.local
    reverse_zone: 20.180.10.in-addr.arpa
-   app_domain: ocp.ocp.local                           #ex. ocp.isv.local
+   app_domain: ocp.vme.local                           #ex. ocp.isv.local
    customerforwarderdns_fqdn: resolver.hpecorp.net
    solution_subnet_ip: 10.180.20.0/24
    ansible_engine_ip: 10.180.20.155
@@ -91,7 +95,7 @@ slave2_binddns: 10.180.20.153
 
 VIP: 10.180.20.180
 VIP_Prefix: 24
-haproxy_fqdn: haproxy.ocp.ocp.local
+haproxy_fqdn: haproxy.ocp.vme.local
 
 squid_proxy_IP:
 
@@ -102,36 +106,36 @@ squid_port:                                  #ex. 3128
 ocp_bootstrap:
  - name: bootstrap
    ip: 10.180.20.181
-   fqdn: bootstrap.ocp.ocp.local                         #ex. bootstrap.ocp.isv.local
+   fqdn: bootstrap.ocp.vme.local                         
    mac_address: 52:54:00:34:c1:4e             #ex. 52:54:00:3e:f5:c1
 
 ocp_masters:
  - name: master1
    ip: 10.180.20.182
-   fqdn: master1.ocp.ocp.local                           #ex. master1.ocp.isv.local
+   fqdn: master1.ocp.vme.local                           #ex. master1.ocp.isv.local
    mac_address: 52:54:00:34:c1:4c
  - name: master2
    ip: 10.180.20.183
-   fqdn: master2.ocp.ocp.local
+   fqdn: master2.ocp.vme.local
    mac_address: 52:54:00:34:c1:4a
  - name: master3
    ip: 10.180.20.184
-   fqdn: master3.ocp.ocp.local
+   fqdn: master3.ocp.vme.local
    mac_address: 52:54:00:34:c1:3e
 
 ocp_workers:
  - name: worker1
    ip: 10.180.20.185
-   fqdn: worker1.ocp.ocp.local                          #ex. mworker1.ocp.isv.local
-   mac_address: 88:e9:a4:d2:bc:70         ### If user add core os worker to cluster then update mac address, if it rhel worker leave it empty
+   fqdn: worker1.ocp.vme.local                          #ex. mworker1.ocp.isv.local
+   mac_address: 88:e9:a4:f2:bc:3c         ### If user add core os worker to cluster then update mac address, if it rhel worker leave it empty
  - name: worker2
    ip: 10.180.20.186
-   fqdn: worker2.ocp.ocp.local
-   mac_address: 88:e9:a4:d2:bc:5e
+   fqdn: worker2.ocp.vme.local
+   mac_address: 88:e9:a4:f2:bc:3e
  - name: worker3
    ip: 10.180.20.187
-   fqdn: worker3.ocp.ocp.local
-   mac_address: 88:e9:a4:d2:ac:3e
+   fqdn: worker3.ocp.vme.local
+   mac_address: 88:e9:a4:f2:bc:3a
 
 
 dns_forwarder:
@@ -151,15 +155,7 @@ pull_secret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZ
 #Path to ISV-OpenShift-develop Directory; Example: /opt/Openshift-Synergy-RA-LTI-OCP-4.12/DL-LTI-Openshift(no trailing forwardslash required)
 dest_base_path: '/opt/hpe-solutions-openshift/DL-LTI-Openshift'
 install_dir: /root/ocp-install
-
-#Is Environment Airgapped; ('yes' or 'no'):
-is_environment_airgap: 'no'
-mirror_registry_ip:                     #10.0.x.x
-mirror_registry_fqdn:                   #registry.xxx.xxx
-LOCAL_REGISTRY:                         #registry.xxx.xxx:8443
-LOCAL_REPOSITORY:                       #ocp416
-ARCHITECTURE:                           #x86_64
-yumrepo:                                #10.0.x.x
+base_dir_path: /opt/vme
 
 ###Common Networking
 # Interface Name of Rhel9 VM: interface_name: eth0
@@ -168,26 +164,13 @@ interface_name: enp1s0
 # dhcp range that is used for OCP nodes Example: dhcp_range: 192.168.42.204,192.168.42.210,24h
 dhcp_range: 10.180.20.190,10.180.20.198
 
-# DO not change these details
-# install media details Example: image_location: "/tmp/image/"
-image_location: /tmp/image/
-
-# Example: initramfs_name: rhcos-live-initramfs.x86_64.img
-initramfs_name: rhcos-live-initramfs.x86_64.img
-
-# Example: kernel_name: rhcos-live-kernel-x86_64
-kernel_name: rhcos-live-kernel-x86_64
-
-# Example: bios_uefi_name: rhcos-live-rootfs.x86_64.img
-bios_uefi_name: rhcos-live-rootfs.x86_64.img
-
 #OCP VM details
 vm_cpu: 4                           #VM CPU cores
 vm_mem: 16000                       #VM RAM detail
 vm_size: 250                        #VM virtual disk size is in GB
 
 #Ubuntu Installer VM details
-ubuntu_installer_hostname: ubuntu-installer.isv.local
+ubuntu_installer_hostname: ubuntu-installer.vme.local
 ubuntu_installer_ip: 10.180.20.180
 ubuntu_installer_username: root 
 ubuntu_installer_password: Password!234
@@ -195,3 +178,19 @@ ubuntu_installer_host_prefix: 24
 ubuntu_installer_host_gateway: 10.180.20.2
 ubuntu_installer_host_nameserver: 10.180.20.2
 ubuntu_installer_mac: "52:54:00:12:34:42" 
+
+vmemanager:
+  vmeiso_location: HPE_VM_Essentials_SW_image_8.0.5_1_S5Q83-11009.iso
+  hostname: vmemgr.ocp.local
+  hostip: 
+  interface: bond0.800
+  username: hpeadmin
+  password: Password!234
+
+group_name: "developers"
+cloud_name: "morpheuscloud"
+cluster_name: "cephcluster"
+cluster_type: "HPE VM"
+cluster_layout: "ceph"     #value for this should be either ceph or nonceph.Any other values are not supported
+ubuntu_version: 24.04
+data_device: "/dev/sdd,/dev/sde"      #data_device on the ceph hosts 
