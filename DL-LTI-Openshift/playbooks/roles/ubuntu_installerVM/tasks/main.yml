@@ -149,4 +149,17 @@
     search_regex: OpenSSH
     delay: 10
 
+- name: Delete custom ISO image from /tmp
+  file:
+    path: /tmp/ubuntu_installer_custom_iso.iso
+    state: absent
+  delegate_to: "{{ groups['vme_nodes'][0] }}" 
+
+- name: Delete custom ubuntu iso directory
+  file:
+    path: /tmp/ubuntu_installer*
+    state: absent
+  delegate_to: localhost
+
+
 
