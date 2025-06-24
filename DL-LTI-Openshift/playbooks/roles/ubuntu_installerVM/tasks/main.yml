@@ -122,11 +122,31 @@
     group: root
     mode: 0644
 
+# - name: Create installer vm on VME node1
+#   become: yes
+#   shell: >
+#     virt-install
+#     --name ubuntuinstaller
+#     --memory {{ vm_mem }}
+#     --vcpus {{ vm_cpu }}
+#     --cpu host
+#     --disk pool=mvm-volumes,size={{ vm_size }}
+#     --os-variant ubuntu24.04
+#     --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ ubuntu_installer_mac }}
+#     --noautoconsole
+#     --console pty,target_type=serial
+#     --serial pty
+#     --boot cdrom,hd
+#     --autostart
+#     --cdrom /tmp/ubuntu_installer_custom_iso.iso
+#     --wait 15
+#   delegate_to: "{{ groups['vme_nodes'][0] }}" 
+
 - name: Create installer vm on VME node1
   become: yes
   shell: >
     virt-install
-    --name ubuntuinstaller
+    --name test_ubuntu_vm
     --memory {{ vm_mem }}
     --vcpus {{ vm_cpu }}
     --cpu host
