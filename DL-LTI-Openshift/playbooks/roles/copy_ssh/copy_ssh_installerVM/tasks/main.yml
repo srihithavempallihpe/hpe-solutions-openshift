@@ -1,7 +1,7 @@
 ---
    - name: Get current user
-      command: whoami
-      register: whoami_output
+     command: whoami
+     register: whoami_output
 
    - name: Copy ssh key to VM
      shell: "sshpass -p '{{ ubuntu_installer_password }}' ssh-copy-id -f -o StrictHostKeyChecking=no root@{{ ubuntu_installer_ip }}"
