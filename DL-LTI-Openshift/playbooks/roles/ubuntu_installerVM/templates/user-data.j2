@@ -31,6 +31,8 @@ autoinstall:
   ssh:
     install-server: true
     ssh_pwauth: true  # allow SSH password authentication
+    allow-pw: true
+    disable-root: false
   updates: security
   late-commands:
     - echo "root:{{ ubuntu_installer_password }}" | chroot /target chpasswd
@@ -41,5 +43,5 @@ autoinstall:
     - chroot /target systemctl restart ssh
     - chroot /target systemctl enable ssh
     - chroot /target systemctl status ssh > /target/root/ssh_status.log 2>&1 || true
-  disable_root: false  # explicitly allow root login (cloud-init level)
+  
   
