@@ -33,15 +33,13 @@ autoinstall:
     ssh_pwauth: true  # allow SSH password authentication
     allow-pw: true
     disable-root: false
-  updates: security
   late-commands:
-    - echo "root:{{ ubuntu_installer_password }}" | chroot /target chpasswd
-    - sed -i '/^PermitRootLogin/d' /target/etc/ssh/sshd_config
-    - echo 'PermitRootLogin yes' >> /target/etc/ssh/sshd_config
-    - sed -i '/^PasswordAuthentication/d' /target/etc/ssh/sshd_config
-    - echo 'PasswordAuthentication yes' >> /target/etc/ssh/sshd_config
-    - chroot /target systemctl restart ssh
-    - chroot /target systemctl enable ssh
-    - chroot /target systemctl status ssh > /target/root/ssh_status.log 2>&1 || true
+  - echo "root:{{ ubuntu_installer_password }}" | chroot /target chpasswd
+  - sed -i '/^PermitRootLogin/d' /target/etc/ssh/sshd_config
+  - echo 'PermitRootLogin yes' >> /target/etc/ssh/sshd_config
+  - sed -i '/^PasswordAuthentication/d' /target/etc/ssh/sshd_config
+  - echo 'PasswordAuthentication yes' >> /target/etc/ssh/sshd_config
+  - chroot /target systemctl restart ssh
+  - chroot /target update-initramfs -u
   
   
