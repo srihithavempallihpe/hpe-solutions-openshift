@@ -146,7 +146,7 @@
   become: yes
   shell: >
     virt-install
-    --name test_ubuntu_vm
+    --name testing_root_user_vm
     --memory {{ vm_mem }}
     --vcpus {{ vm_cpu }}
     --cpu host

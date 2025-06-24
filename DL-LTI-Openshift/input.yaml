@@ -180,11 +180,11 @@ vm_size: 250                        #VM virtual disk size is in GB
 
 
 #testing
-ubuntu_installer_hostname: test_ubuntu_vm.vme.local
-ubuntu_installer_ip: 10.180.20.198
+ubuntu_installer_hostname: testing_root_user.vme.local
+ubuntu_installer_ip: 10.180.20.195
 ubuntu_installer_username: hpadmin 
 ubuntu_installer_password: Password!234
 ubuntu_installer_host_prefix: 24
 ubuntu_installer_host_gateway: 10.180.20.2
 ubuntu_installer_host_nameserver: 10.180.20.2
-ubuntu_installer_mac: "52:54:00:12:A0:4c" 
+ubuntu_installer_mac: "52:54:00:12:A0:4d" 
