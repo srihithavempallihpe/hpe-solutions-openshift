@@ -1,7 +1,5 @@
 - name: Copy ssh key to ubuntu installer VM
   hosts: localhost
-  become: yes
-  remote_user: root
   gather_facts: False
   vars_files:
     - ../input.yaml
