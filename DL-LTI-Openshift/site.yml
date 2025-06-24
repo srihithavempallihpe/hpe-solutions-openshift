@@ -14,20 +14,14 @@
 ####
 
 ---
-
-  - import_playbook: playbooks/rhel9_os_deployment.yml
-  - import_playbook: playbooks/copy_ssh_headnode.yml
-  - import_playbook: playbooks/prepare_rhel_hosts.yml
-  - import_playbook: playbooks/ntp.yml
-  - import_playbook: playbooks/binddns.yml
-  - import_playbook: playbooks/haproxy.yml
+  - import_playbook: playbooks/vme_deployment.yml
+  - import_playbook: playbooks/copy_ssh_vmenode.yml
+  - import_playbook: playbooks/ocp_infra_services.yml
   - import_playbook: playbooks/squid_proxy.yml
-  - import_playbook: playbooks/storage_pool.yml
-  - import_playbook: playbooks/rhel9_installerVM.yml
+  - import_playbook: playbooks/ubuntu_installerVM.yml
   - import_playbook: playbooks/copy_ssh_installerVM.yml
-  - import_playbook: playbooks/prepare_rhel9_installer.yml
-  - import_playbook: playbooks/download_ocp_packages.yml
-  - import_playbook: playbooks/generate_manifest.yml
-  - import_playbook: playbooks/copy_ocp_tool.yml
-  - import_playbook: playbooks/deploy_ipxe_ocp.yml
-  - import_playbook: playbooks/ocp_vm.yml
+  - import_playbook: playbooks/prepare_ubuntu_installer.yml
+  - import_playbook: playbooks/custom_iso_creation.yml
+  - import_playbook: playbooks/copy_custom_iso.yml
+  - import_playbook: playbooks/ocp_master_vms.yml
+  - import_playbook: playbooks/ocp_worker_vms.yml
