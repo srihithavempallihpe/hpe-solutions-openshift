@@ -30,17 +30,15 @@ autoinstall:
       name: lvm
   ssh:
     install-server: true
+    ssh_pwauth: true  # allow SSH password authentication
   updates: security
   late-commands:
-    - echo "root:{{ ubuntu_installer_password }}" | chpasswd
-    - passwd -u root
-    - sed -i '/^PermitRootLogin/d' /etc/ssh/sshd_config
-    - echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
-    - sed -i '/^PasswordAuthentication/d' /etc/ssh/sshd_config
-    - echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
-    - systemctl restart ssh || systemctl restart sshd || true
-    - systemctl status ssh > /root/ssh_status.log 2>&1 || true
-    - passwd -S root > /root/root_passwd_status.log
-    - echo "Installation completed" > /root/install.log
- 
-    
+    - echo "root:{{ ubuntu_installer_password }}" | chroot /target chpasswd
+    - chroot /target passwd -u root
+    - sed -i '/^PermitRootLogin/d' /target/etc/ssh/sshd_config
+    - echo 'PermitRootLogin yes' >> /target/etc/ssh/sshd_config
+    - sed -i '/^PasswordAuthentication/d' /target/etc/ssh/sshd_config
+    - echo 'PasswordAuthentication yes' >> /target/etc/ssh/sshd_config
+    - chroot /target systemctl enable ssh || chroot /target systemctl enable sshd || true
+    - echo "Installation completed" > /target/root/install.log
+  disable_root: false  # explicitly allow root login (cloud-init level)
