@@ -34,11 +34,12 @@ autoinstall:
   updates: security
   late-commands:
     - echo "root:{{ ubuntu_installer_password }}" | chroot /target chpasswd
-    - chroot /target passwd -u root
     - sed -i '/^PermitRootLogin/d' /target/etc/ssh/sshd_config
     - echo 'PermitRootLogin yes' >> /target/etc/ssh/sshd_config
     - sed -i '/^PasswordAuthentication/d' /target/etc/ssh/sshd_config
     - echo 'PasswordAuthentication yes' >> /target/etc/ssh/sshd_config
-    - chroot /target systemctl enable ssh || chroot /target systemctl enable sshd || true
-    - echo "Installation completed" > /target/root/install.log
+    - chroot /target systemctl restart ssh
+    - chroot /target systemctl enable ssh
+    - chroot /target systemctl status ssh > /target/root/ssh_status.log 2>&1 || true
   disable_root: false  # explicitly allow root login (cloud-init level)
+  
