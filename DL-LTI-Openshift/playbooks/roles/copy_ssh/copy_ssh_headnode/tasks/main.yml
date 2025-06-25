@@ -40,7 +40,11 @@
   #  - name: Copy ssh keys to head nodes
   #    shell: "sshpass -p '{{ servers[2].Host_Password }}' ssh-copy-id  -o StrictHostKeyChecking=no root@{{ servers[2].Host_VlanIP1 }}"
   
-    - name: Ensure SSH key is copied to target user
-      ansible.builtin.command: >
-        ssh-copy-id -i '/opt/morpheus/.local/.ssh/id_rsa.pub' -o StrictHostKeyChecking=no {{ servers[1].Host_Username }}@{{ servers[1].Host_VlanIP1 }}
-      delegate_to: localhost
+    # - name: Ensure SSH key is copied to target user
+    #   ansible.builtin.command: >
+    #     ssh-copy-id -i '/opt/morpheus/.local/.ssh/id_rsa.pub' -o StrictHostKeyChecking=no {{ servers[1].Host_Username }}@{{ servers[1].Host_VlanIP1 }}
+    #   delegate_to: localhost
+
+    - name: Copy ssh keys to all head nodes
+      shell: "sshpass -p '{{ item.Host_Password }}' ssh-copy-id -o StrictHostKeyChecking=no hpadmin@{{ item.Host_VlanIP1 }}"
+      with_items: "{{ servers }}"
