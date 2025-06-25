@@ -5,7 +5,7 @@ servers:
    ILO_Password: Password!234
    Hostname: ocp_host1.vme.local               #ex. headnode1.isv.local
    Hostdomain: vme.local
-   Host_Username: root
+   Host_Username: hpadmin
    Host_Password: Password!234
    HWMACADDR1: 94:40:c9:a7:de:d4            #mac address for server physical interface1
    HWMACADDR2: 94:40:c9:a7:de:d5             #mac address for server physical interface2
@@ -28,7 +28,7 @@ servers:
    ILO_Password: Password!234
    Hostname: ocp_host2.vme.local               #ex. headnode2.isv.local
    Hostdomain: vme.local
-   Host_Username: root
+   Host_Username: hpadmin
    Host_Password: Password!234
    HWADDR1: 88:e9:a4:cb:32:3c             #mac address for server physical interface1
    HWADDR2: 88:e9:a4:cb:32:3d             #mac address for server physical interface2
@@ -51,7 +51,7 @@ servers:
    ILO_Password: Password!234
    Hostname: ocp_host3.vme.local                 #ex. headnode3.isv.local
    Hostdomain: vme.local
-   Host_Username: root
+   Host_Username: hpadmin
    Host_Password: Password!234
    HWADDR1: 88:e9:a4:cb:32:f4             #mac address for server physical interface1
    HWADDR2: 88:e9:a4:cb:32:f5             #mac address for server physical interface2
