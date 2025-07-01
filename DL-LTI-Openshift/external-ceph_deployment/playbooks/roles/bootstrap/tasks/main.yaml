@@ -1,3 +1,0 @@
----
-- name: bootstrap the server
-  shell: "cephadm bootstrap --ssh-user {{ ceph_adminuser }} --mon-ip {{ servers[0].Host_IP }} --allow-fqdn-hostname --registry-json /etc/mylogin.json --initial-dashboard-user {{ dashboard_user}} --initial-dashboard-password {{ dashboard_password }}"

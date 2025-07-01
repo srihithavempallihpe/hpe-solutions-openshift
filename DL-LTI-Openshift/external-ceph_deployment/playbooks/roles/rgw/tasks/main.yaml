@@ -1,4 +1,0 @@
----
-
-  - name: create the rado gateways(RGW) 
-    shell: ceph orch apply rgw {{ rgw_pool_name }}
