@@ -1,77 +1,26 @@
 servers:
- - Server_serial_number: 2M205107TH
-   ILO_Address: 172.28.1.20
-   ILO_Username: admin
-   ILO_Password: Password!234
-   Hostname: ocp_host1.vme.local               #ex. headnode1.isv.local
-   Hostdomain: vme.local
+ - Hostname: ocp_host1.vme.local               #ex. headnode1.isv.local
    Host_Username: hpadmin
-   Host_Password: Password!234
-   HWMACADDR1: 94:40:c9:a7:de:d4            #mac address for server physical interface1
-   HWMACADDR2: 94:40:c9:a7:de:d5             #mac address for server physical interface2
-   Host_OS_disk: sda
-   Host_VlanID1:                          #solution VLAN ID ex. 230
+   Host_Password: Password!234                        
    Host_VlanIP1: 10.180.20.151
-   Host_Vlan1prefix: 24
    Host_Netmask: 255.255.255.0
-   Host_Vlan1Gateway: 10.180.20.2                       #ex. 8,24,32
-   Host_DNS: 10.180.20.2
-   Host_VlanID2: 
-   Host_VlanIP2: 
-   Host_Vlan2prefix: 24                      
-   corporate_proxy:               #provide corporate proxy, ex. proxy.houston.company.net
-   corporate_proxy_port:                 #corporate proxy port no, ex. 8080
+   Host_Vlan1Gateway: 10.180.20.2                       #ex. 8,24,32             
 
- - Server_serial_number: 3M1D0S139T
-   ILO_Address: 172.28.0.12
-   ILO_Username: admin
-   ILO_Password: Password!234
-   Hostname: ocp_host2.vme.local               #ex. headnode2.isv.local
-   Hostdomain: vme.local
+ - Hostname: ocp_host2.vme.local               #ex. headnode2.isv.local
    Host_Username: hpadmin
-   Host_Password: Password!234
-   HWADDR1: 88:e9:a4:cb:32:3c             #mac address for server physical interface1
-   HWADDR2: 88:e9:a4:cb:32:3d             #mac address for server physical interface2
-   Host_OS_disk: sda
-   Host_VlanID1:                          #solution VLAN ID ex. 230
+   Host_Password: Password!234                         
    Host_VlanIP1: 10.180.20.152
-   Host_Vlan1prefix: 24
    Host_Netmask: 255.255.255.0
    Host_Vlan1Gateway: 10.180.20.2                       #ex. 8,24,32
-   Host_DNS: 10.180.20.2
-   Host_VlanID2: 216
-   Host_VlanIP2: 
-   Host_Vlan2prefix: 24                      
-   corporate_proxy:               #provide corporate proxy, ex. proxy.houston.hpecorp.net
-   corporate_proxy_port:                 #corporate proxy port no, ex. 8080
 
- - Server_serial_number: 3M1D0S139R
-   ILO_Address: 172.28.0.13
-   ILO_Username: admin
-   ILO_Password: Password!234
-   Hostname: ocp_host3.vme.local                 #ex. headnode3.isv.local
-   Hostdomain: vme.local
+ - Hostname: ocp_host3.vme.local                 #ex. headnode3.isv.local
    Host_Username: hpadmin
    Host_Password: Password!234
-   HWADDR1: 88:e9:a4:cb:32:f4             #mac address for server physical interface1
-   HWADDR2: 88:e9:a4:cb:32:f5             #mac address for server physical interface2
-   Host_OS_disk: sda
-   Host_VlanID1:                          #solution VLAN ID ex. 230
    Host_VlanIP1: 10.180.20.153
-   Host_Vlan1prefix: 24
    Host_Netmask: 255.255.255.0
    Host_Vlan1Gateway: 10.180.20.2                       #ex. 8,24,32
-   Host_DNS: 10.180.20.2
-   Host_VlanID2: 
-   Host_VlanIP2: 
-   Host_Vlan2prefix: 24  
-   corporate_proxy:               #provide corporate proxy, ex. proxy.houston.hpecorp.net
-   corporate_proxy_port:                #corporate proxy port no, ex. 8080
-
+   
 config:
-   HTTP_server_base_url: http://10.180.20.155/  #Installer IP address
-   HTTP_file_path: /usr/share/nginx/html/
-   OS_type: ubuntu
    OS_image_name: ubuntu-24.04.2-live-server-amd64.iso    # ISO image should be present in /usr/share/nginx/html/
 
 common:
@@ -151,10 +100,7 @@ pull_secret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZ
 #####################################################################
 # Details of Ansible User Credentials required to set-up the iPXE
 
-#Path to ISV-OpenShift-develop Directory; Example: /opt/Openshift-Synergy-RA-LTI-OCP-4.12/DL-LTI-Openshift(no trailing forwardslash required)
-dest_base_path: '/opt/hpe-solutions-openshift/DL-LTI-Openshift'
 install_dir: /root/ocp-install
-base_dir_path: /opt/vme
 
 ###Common Networking
 # Interface Name of Rhel9 VM: interface_name: eth0
