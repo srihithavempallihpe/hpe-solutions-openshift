@@ -1,9 +1,7 @@
 ---
 - name: Create custom iso for ocp vms 
   hosts: infra_vm
-  become: true
   gather_facts: False
-  remote_user: root
   vars_files:
     - ../input.yaml
   roles:

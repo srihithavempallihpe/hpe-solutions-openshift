@@ -1,2 +1,7 @@
-[all]
-172.28.0.180
+[vme_nodes]
+10.180.**.** ansible_user=root 
+10.180.**.** ansible_user=root 
+10.180.**.** ansible_user=root 
+
+[infra_vm]
+10.180.**.** anisble_user=root

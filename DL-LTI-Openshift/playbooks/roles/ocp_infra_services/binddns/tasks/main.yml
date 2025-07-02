@@ -10,7 +10,6 @@
     state: present
     update_cache: yes
 
-
 - name: Compute zone names
   set_fact:
     zone_name: "{{ common.cluster_subdomain }}.{{ common.base_domain }}"

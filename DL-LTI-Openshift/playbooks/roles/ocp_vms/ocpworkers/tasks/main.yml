@@ -2,7 +2,7 @@
   shell:
     cmd: >-
         virt-install
-        -n rhocpworker11
+        -n rhocpworker1
         --description "worker1 Machine for Openshift 4 Cluster"
         --memory {{ vm_mem }}
         --vcpus={{ vm_cpu }}  
@@ -23,7 +23,7 @@
   shell:
     cmd: >-
         virt-install
-        -n rhocpworker12
+        -n rhocpworker2
         --description "Worker2 Machine for Openshift 4 Cluster"
         --memory {{ vm_mem }}
         --vcpus={{ vm_cpu }}
@@ -44,7 +44,7 @@
   shell:
     cmd: >-
         virt-install
-        -n  rhocpworkerr13
+        -n  rhocpworkerr3
         --description "Worker3 Machine for Openshift 4 Cluster"
         --memory {{ vm_mem }}
         --vcpus={{ vm_cpu }}

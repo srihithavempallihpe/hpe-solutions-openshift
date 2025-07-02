@@ -1,29 +1,7 @@
-[kvm_nodes]
-172.28.0.101 ansible_user=root
-172.28.0.102 ansible_user=root
-172.28.0.103 ansible_user=root
+[vme_nodes]
+10.180.**.** ansible_user=root 
+10.180.**.** ansible_user=root 
+10.180.**.** ansible_user=root 
 
-[ansible_host]
-172.28.0.98 ansible_user=root
-
-[rhel9_installerVM]
-172.28.0.98 ansible_user=root
-
-[binddns_masters]
-172.28.0.101 ansible_user=root
-
-[binddns_slaves]
-172.28.0.102 ansible_user=root
-172.28.0.103 ansible_user=root
-
-[masters_info]
-master1 ip=172.28.0.101 hostname=headnode1 ansible_user=root
-
-[slaves_info]
-slave1 ip=172.28.0.102 hostname=headnode2 ansible_user=root
-slave2 ip=172.28.0.103 hostname=headnode3 ansible_user=root
-
-[ocp_nodes]
-172.28.0.105 ansible_user=root
-172.28.0.106 ansible_user=root
-172.28.0.107 ansible_user=root
+[infra_vm]
+10.180.**.** anisble_user=root

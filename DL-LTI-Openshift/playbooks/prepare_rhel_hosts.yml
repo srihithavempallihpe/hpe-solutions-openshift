@@ -1,8 +1,0 @@
----
-- name: prepare hosts
-  hosts: vme_nodes
-  gather_facts: false
-  vars_files:
-    - ../input.yaml
-  roles:
-    - role: roles/prepare_rhel_hosts

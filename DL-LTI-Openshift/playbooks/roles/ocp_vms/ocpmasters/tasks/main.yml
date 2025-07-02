@@ -1,75 +1,72 @@
 ---
-# - name: copy ssh key
-#   shell: ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no root@{{ servers[2].Host_VlanIP1 }}
-
-# - name: Create bootstrap VM on vme node1
-#   shell:
-#     cmd: >-
-#         virt-install
-#         -n rhocpbootstrap
-#         --description "Bootstrap Machine for Openshift 4 Cluster"
-#         --memory {{ vm_mem }}
-#         --vcpus={{ vm_cpu }}
-#         --os-variant=rhel9.0
-#         --os-type linux
-#         --cdrom /var/morpheus/kvm/images/rhcos-bootstrap.iso
-#         --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
-#         --network network=Management,model=virtio,virtualport_type=openvswitch,mac={% for item in ocp_bootstrap %}{{ item.mac_address }}{% endfor %}
-#         --autostart 
-#         --console pty,target_type=virtio
-#         --graphics spice
-#         --noautoconsole 
-#         --wait 15
-#   delegate_to: "{{ groups['vme_nodes'][0] }}" 
-
-
-# - name: Create master1 VM on vme node1
-#   shell:
-#     cmd: >-
-#         virt-install
-#         -n rhocpmaster11
-#         --description "Master1 Machine for Openshift 4 Cluster"
-#         --memory {{ vm_mem }}
-#         --vcpus={{ vm_cpu }}  
-#         --os-variant=rhel9.0
-#         --os-type linux
-#         --cdrom /var/morpheus/kvm/images/rhcos-master.iso
-#         --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
-#         --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[0].mac_address}}
-#         --autostart 
-#         --console pty,target_type=virtio
-#         --graphics spice
-#         --noautoconsole 
-#         --wait 15
-#   delegate_to: "{{ groups['vme_nodes'][0] }}" 
-
-
-# - name: Create Master2 VM on vme node2
-#   shell:
-#     cmd: >-
-#         virt-install
-#         -n rhocpmaster12
-#         --description "Master2 Machine for Openshift 4 Cluster"
-#         --memory {{ vm_mem }}
-#         --vcpus={{ vm_cpu }}
-#         --os-variant=rhel9.0
-#         --os-type linux
-#         --cdrom /var/morpheus/kvm/images/rhcos-master.iso
-#         --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
-#         --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[1].mac_address}}
-#         --autostart 
-#         --console pty,target_type=virtio
-#         --graphics spice
-#         --noautoconsole 
-#         --wait 15
-#   delegate_to: "{{ groups['vme_nodes'][1] }}"
-
-
-- name: Create Master3 VM on vme node
+- name: Create bootstrap VM on vme node1
   shell:
     cmd: >-
         virt-install
-        -n  vm
+        -n rhocpbootstrap
+        --description "Bootstrap Machine for Openshift 4 Cluster"
+        --memory {{ vm_mem }}
+        --vcpus={{ vm_cpu }}
+        --os-variant=rhel9.0
+        --os-type linux
+        --cdrom /var/morpheus/kvm/images/rhcos-bootstrap.iso
+        --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={% for item in ocp_bootstrap %}{{ item.mac_address }}{% endfor %}
+        --autostart 
+        --console pty,target_type=virtio
+        --graphics spice
+        --noautoconsole 
+        --wait 15
+  delegate_to: "{{ groups['vme_nodes'][0] }}" 
+
+
+- name: Create master1 VM on vme node1
+  shell:
+    cmd: >-
+        virt-install
+        -n rhocpmaster1
+        --description "Master1 Machine for Openshift 4 Cluster"
+        --memory {{ vm_mem }}
+        --vcpus={{ vm_cpu }}  
+        --os-variant=rhel9.0
+        --os-type linux
+        --cdrom /var/morpheus/kvm/images/rhcos-master.iso
+        --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[0].mac_address}}
+        --autostart 
+        --console pty,target_type=virtio
+        --graphics spice
+        --noautoconsole 
+        --wait 15
+  delegate_to: "{{ groups['vme_nodes'][0] }}" 
+
+
+- name: Create Master2 VM on vme node2
+  shell:
+    cmd: >-
+        virt-install
+        -n rhocpmaster2
+        --description "Master2 Machine for Openshift 4 Cluster"
+        --memory {{ vm_mem }}
+        --vcpus={{ vm_cpu }}
+        --os-variant=rhel9.0
+        --os-type linux
+        --cdrom /var/morpheus/kvm/images/rhcos-master.iso
+        --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[1].mac_address}}
+        --autostart 
+        --console pty,target_type=virtio
+        --graphics spice
+        --noautoconsole 
+        --wait 15
+  delegate_to: "{{ groups['vme_nodes'][1] }}"
+
+
+- name: Create Master3 VM on vme node3
+  shell:
+    cmd: >-
+        virt-install
+        -n rhocpmaster3
         --description "Master3 Machine for Openshift 4 Cluster"
         --memory {{ vm_mem }}
         --vcpus={{ vm_cpu }}
@@ -77,7 +74,7 @@
         --os-type linux
         ---cdrom /var/morpheus/kvm/images/rhcos-master.iso
         --disk pool=mvm-volumes,device=disk,size={{ vm_size }},bus=virtio
-        --network network=Management,model=virtio,virtualport_type=openvswitch,mac="52:54:00:34:4d:3a"
+        --network network=Management,model=virtio,virtualport_type=openvswitch,mac={{ocp_masters[2].mac_address}}
         --autostart 
         --console pty,target_type=virtio
         --graphics spice

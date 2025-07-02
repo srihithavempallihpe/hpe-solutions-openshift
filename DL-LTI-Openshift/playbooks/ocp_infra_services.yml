@@ -1,25 +1,19 @@
 ---
 - hosts: infra_vm
-  become: true
   gather_facts: no
   vars_files: ../input.yaml
-  remote_user: root
   roles:
     - { role: roles/ocp_infra_services/binddns }
 
 - name: Deploy haproxy service
   hosts: infra_vm
-  become: true
   gather_facts: False
-  remote_user: root
   vars_files:
     - ../input.yaml
   roles:
     - { role: roles/ocp_infra_services/haproxy }
 
 - hosts: infra_vm
-  become: true
-  remote_user: root
   vars_files: ../input.yaml
   gather_facts: True
   roles:
